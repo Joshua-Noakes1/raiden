@@ -4,16 +4,27 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "tsc": "tsc -w --skipLibCheck"
+    "build-prod": "tsc -w --skipLibCheck; rm -rf *.ts",
+    "build-dev": "tsc -w --skipLibCheck",
+    "dev": "nodemon --ignore index.ts"
   },
   "author": "joshua-noakes1",
   "license": "GPL-3.0",
   "dependencies": {
+    "@types/cli-color": "^2.0.1",
+    "@types/uuid": "^8.3.1",
+    "async": "^3.2.2",
+    "cli-color": "^2.0.1",
     "discord.js": "^13.3.1",
-    "dotenv": "^10.0.0"
+    "dotenv": "^10.0.0",
+    "node-fetch": "^2.6.6",
+    "nodejs-file-downloader": "^4.7.4",
+    "uuid": "^8.3.2",
+    "wokcommands": "^1.5.3",
+    "youtube-dl-exec": "^1.3.3"
   },
   "devDependencies": {
+    "@types/async": "^3.2.9",
     "typescript": "^4.4.4"
   }
 }
