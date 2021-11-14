@@ -23,6 +23,7 @@ client.on("ready", async (client) => {
     testServers: ["909103932406640660"],
     botOwners: ["412876072540045312"],
   });
+  client.user.setPresence({status: "dnd", activities: [{name: "Watching TikTok"}]});
 });
 
 // client.on("messageCreate", (message) => {
