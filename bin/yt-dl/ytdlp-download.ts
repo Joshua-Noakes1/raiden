@@ -1,8 +1,10 @@
 import clc from "cli-color";
 import path from "path";
+const { exec } = require("child_process");
 import { loadJSON, writeJSON } from "../loadWrite";
 import { existsSync } from "fs";
 import Downloader from "nodejs-file-downloader";
+import { MessageEmbed } from "discord.js";
 import fetch from "node-fetch";
 
 export async function downloadYTDLP() {
@@ -58,6 +60,8 @@ export async function downloadYTDLP() {
 
     // save ytdl version
     console.log(clc.green("[Success]"), "Downloaded new version of ytdl.");
+    if (process.platform === "linux")
+      exec(`chmod +x ${path.join(__dirname, "bin", "yt-dlp")}`);
     await writeJSON(
       path.join(__dirname, "bin", "ytdl-version.json"),
       {
@@ -65,7 +69,6 @@ export async function downloadYTDLP() {
       },
       true
     );
-    process.exit(0);
   } else {
     console.log(clc.green("[Success]"), "No new version of ytdlp available.");
   }

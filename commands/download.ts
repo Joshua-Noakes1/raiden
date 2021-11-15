@@ -2,15 +2,14 @@ import clc from "cli-color";
 import fs from "fs";
 import { YTDLP } from "../bin/yt-dl/ytdlp-core";
 import { downloadMedia } from "../bin/download/downloadMedia";
-import { MessageEmbed } from "discord.js";
+import { MessageComponentInteraction, MessageEmbed } from "discord.js";
 import { ICommand } from "wokcommands";
 
 export default {
   category: "media",
   description: "send all tiktoks",
-  testOnly: true,
 
-  callback: async ({ user, message, args }) => {
+  callback: async ({ message, args }) => {
     // check to see if the user has given a tiktok url
     if (!args[0]) {
       const embed = new MessageEmbed()
@@ -19,6 +18,7 @@ export default {
         .setDescription("Please provide a username");
       return embed;
     }
+
     // giving feedback to the user
     message.channel.send(`Downloading videos from **${args[0]}**`);
 
@@ -59,14 +59,19 @@ export default {
           .setDescription(video.description)
           .setColor("#ff0050")
           .addFields(
-            { name: "Username", value: video.uploader, inline: true },
-            { name: "Name", value: video.creator, inline: true },
+            { name: "Username", value: `${video.uploader}`, inline: true },
+            { name: "Name", value: `${video.creator}`, inline: true },
             { name: "\u200B", value: "\u200B", inline: true }
           )
           .addFields(
             { name: "Views", value: `${video.view_count}`, inline: true },
             { name: "Likes", value: `${video.like_count}`, inline: true },
             { name: "Comments", value: `${video.comment_count}`, inline: true }
+          )
+          .addFields(
+            { name: "Track", value: `${video.track}`, inline: true },
+            { name: "Album", value: `${video.album}`, inline: true },
+            { name: "Artist", value: `${video.artist}`, inline: true }
           )
           .setURL(`https://tiktok.com/@${video.uploader}/video/${video.id}`);
 
@@ -89,7 +94,7 @@ export default {
       const embed = new MessageEmbed()
         .setTitle("Download Complete")
         .setColor("#ff0050")
-        .setDescription(`Downloaded **${loopLength}** videos`);
+        .setDescription(`Downloaded **${loopLength}** video(s)`);
       return embed;
     } else {
       const embed = new MessageEmbed()

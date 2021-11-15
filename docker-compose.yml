@@ -1,0 +1,10 @@
+version: '3.2'
+services:
+  accore:
+    image: ghcr.io/joshua-noakes1/accore:latest
+    container_name: accore
+    restart: unless-stopped
+    environment:
+      - TZ=Europe/London
+      - TOKEN=xxx
+    
