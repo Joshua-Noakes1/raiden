@@ -75,5 +75,10 @@ typings/
 # FuseBox cache
 .fusebox/
 
+# YTDLP Downloads
+ytdlp-exec
+ytdlp-exec.exe
+version.json
+
 # Old Files
 *old*
