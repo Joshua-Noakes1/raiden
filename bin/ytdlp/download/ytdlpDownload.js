@@ -18,7 +18,7 @@ async function fetchDownload(URL, platform) {
         await writeFileSync(path.join(__dirname, '../', 'bin', `ytdlp-exec${platform}`), YTDLPExec);
 
         // make file executable for user 
-        if (process.platform == 'darwin' || process.platform == 'linux') await exec(`chmod +x ${path.join(__dirname, '../', 'bin', `ytdlp${platform}`)}`);
+        if (process.platform == 'darwin' || process.platform == 'linux') await exec(`chmod +x ${path.join(__dirname, '../', 'bin', `ytdlp-exec${platform}`)}`);
 
         // return success
         return {
@@ -27,7 +27,7 @@ async function fetchDownload(URL, platform) {
         };
     } catch (error) {
         console.log(lcl.red("[YTDLP Download - Error]"), "Failed to download YTDLP", error);
-        return process.exit(1);
+        return {success: false, error}
     }
 }
 

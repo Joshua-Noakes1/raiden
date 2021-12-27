@@ -8,7 +8,7 @@ const lcl = require('cli-color'),
     fetchDownload = require('./ytdlpDownload');
 
 // manage download of YTDLP
-async function ytdlpDownloadCore() {
+async function downloadCore() {
     // load version 
     var version = await readJSON(path.join(__dirname, 'version.json'), true);
     if (version.success == false) var version = {
@@ -34,6 +34,8 @@ async function ytdlpDownloadCore() {
                     success: true,
                     message: `Updated YTDLP version to ${version.version}`
                 };
+            } else {
+                return {success: false}
             }
         } else {
             console.log(lcl.blue('[YTDLP Download - Info]'), `YTDLP is up to date (${version.version})`);
@@ -42,13 +44,9 @@ async function ytdlpDownloadCore() {
                 message: 'YTDLP is up to date'
             }
         }
+    } else {
+        return {success: false}
     }
 }
 
-async function test() {
-    console.log(await ytdlpDownloadCore());
-}
-
-test();
-
-module.exports = ytdlpDownloadCore;
+module.exports = downloadCore;

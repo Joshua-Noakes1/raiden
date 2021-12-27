@@ -19,7 +19,7 @@ async function getDownloadURL() {
                 break;
             default: // catch all
                 console.log(lcl.red("[YTDLP Download - Error]"), `Failed to find compatilble download for your system (${process.platform})`);
-                return process.exit(1);
+                return {success: false}
         }
 
         // return download url
@@ -31,7 +31,7 @@ async function getDownloadURL() {
         };
     } catch (error) {
         console.log(lcl.red("[YTDLP Download - Error]"), "Failed to download YTDLP from Github", error);
-        return process.exit(1);
+        return {success: false, error}
     }
 }
 
