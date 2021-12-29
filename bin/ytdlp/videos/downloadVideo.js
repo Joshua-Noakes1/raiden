@@ -6,9 +6,6 @@ const lcl = require('cli-color'),
     {
         writeFileSync
     } = require('fs'),
-    {
-        fileTypeFromBuffer
-    } = require('file-type'),
     fetch = require('node-fetch');
 
 async function downloadVideo(url) {
@@ -20,16 +17,16 @@ async function downloadVideo(url) {
 
         // create uuid for video and get file type
         var videoUUID = uuidv4();
-        var videoFileType = await fileTypeFromBuffer(videoResult);
 
         // save video and return info
         console.log(lcl.blue("[Fetch - Info]"), "Saving video...");
-        await writeFileSync(path.join(__dirname, 'static', `${videoUUID}.${videoFileType.ext}`), videoResult);
+        await writeFileSync(path.join(__dirname, 'static', `${videoUUID}.mp4`), videoResult);
 
         // return to client 
         return {
             success: true,
-            videoUUID
+            videoUUID,
+            path: path.join(__dirname, 'static', `${videoUUID}.mp4`)
         }
 
     } catch (error) {

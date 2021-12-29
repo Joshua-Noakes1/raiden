@@ -2,7 +2,11 @@ const lcl = require('cli-color'),
     path = require('path'),
     downloadCore = require('../../bin/ytdlp/download/ytdlpCore'),
     videoExec = require('../../bin/ytdlp/bin/ytdlpExec'),
+    downloadVideo = require('../../bin/ytdlp/videos/downloadVideo'),
     dateTime = require('../../bin/dateTime'),
+    {
+        unlinkSync
+    } = require('fs'),
     {
         MessageEmbed
     } = require('discord.js'),
@@ -96,7 +100,12 @@ module.exports = {
             }
         };
 
-        console.log(tiktokVideoExec.videoResult);
+        console.log(tiktokVideoExec.videoResult)
+
+        // try and download video
+        var video = await downloadVideo(tiktokVideoExec.videoResult.formats[0].url);
+        console.log(video);
+
         // build video embed
         const videoEmbed = new MessageEmbed()
             .setTitle(`@${tiktokVideoData.video.meta.author.username} (${tiktokVideoData.video. meta.author.id})`)
@@ -118,8 +127,16 @@ module.exports = {
             .setTimestamp();
         // test
         await interaction.editReply({
-            embeds: [videoEmbed]
+            embeds: [videoEmbed],
+            files: [{
+                attachment: video.path,
+                name: `${video.videoUUID}.mp4`
+            }]
         });
+
+        //remove video
+        await unlinkSync(video.path);
+
         return;
     },
 }
