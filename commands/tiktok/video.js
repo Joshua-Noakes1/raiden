@@ -2,6 +2,7 @@ const lcl = require('cli-color'),
     path = require('path'),
     downloadCore = require('../../bin/ytdlp/download/ytdlpCore'),
     videoExec = require('../../bin/ytdlp/bin/ytdlpExec'),
+    dateTime = require('../../bin/dateTime'),
     {
         MessageEmbed
     } = require('discord.js'),
@@ -41,14 +42,14 @@ module.exports = {
                 .setTimestamp();
 
             // return error embed
-            return await interaction.editReply({
+            await interaction.editReply({
                 embeds: [ytdlpErrorEmbed]
             });
+            return;
         }
 
         // get video info
         console.log(lcl.blue("[Discord - Info]"), "Getting video info...");
-        console.log(await interaction.options.getString('url'));
         var tiktokVideoExec = await videoExec(await interaction.options.getString('url'));
 
         if (tiktokVideoExec.success == false) {
@@ -60,14 +61,65 @@ module.exports = {
                 .setTimestamp();
 
             // return error embed
-            return await interaction.editReply({
+            await interaction.editReply({
                 embeds: [videoErrorEmbed]
             });
+            return;
         }
+
+        // store video urls etc and data 
+        var tiktokVideoData = {
+            video: {
+                meta: {
+                    author: {
+                        username: tiktokVideoExec.videoResult.uploader,
+                        name: tiktokVideoExec.videoResult.creator,
+                        id: tiktokVideoExec.videoResult.uploader_id
+                    },
+                    title: tiktokVideoExec.videoResult.title,
+                    url: `https://www.tiktok.com/@${tiktokVideoExec.videoResult.uploader}/video/${tiktokVideoExec.videoResult.id}`,
+                    viewCount: tiktokVideoExec.videoResult.view_count,
+                    likeCount: tiktokVideoExec.videoResult.like_count,
+                    commentCount: tiktokVideoExec.videoResult.comment_count,
+                    repostCount: tiktokVideoExec.videoResult.repost_count,
+                    uploadDate: await dateTime(tiktokVideoExec.videoResult.timestamp)
+                },
+                video: {
+
+                },
+                images: {
+
+                },
+                audio: {
+
+                }
+            }
+        };
 
         console.log(tiktokVideoExec.videoResult);
         // build video embed
+        const videoEmbed = new MessageEmbed()
+            .setTitle(`@${tiktokVideoData.video.meta.author.username} (${tiktokVideoData.video. meta.author.id})`)
+            .setURL(tiktokVideoData.video.meta.url)
+            .setColor("#ff0000") // TODO - Make Random for the funny
+            .addFields({
+                name: "Creator Username",
+                value: `${tiktokVideoData.video.meta.author.username}`,
+                inline: true
+            }, {
+                name: "Creator Name",
+                value: `${tiktokVideoData.video.meta.author.name}`,
+                inline: true
+            }, {
+                name: "Upload Date",
+                value: `${tiktokVideoData.video.meta.uploadDate.date}/${tiktokVideoData.video.meta.uploadDate.month}/${tiktokVideoData.video.meta.uploadDate.year} ${tiktokVideoData.video.meta.uploadDate.time.hour}:${tiktokVideoData.video.meta.uploadDate.time.minutes}`,
+                inline: true
+            })
+            .setTimestamp();
         // test
-        return await interaction.editReply(`${tiktokVideoExec.videoResult}`);
+        await interaction.editReply({
+            embeds: [videoEmbed]
+        });
+        return;
     },
 }

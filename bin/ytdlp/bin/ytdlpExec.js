@@ -14,6 +14,7 @@ async function execDownload(videoURL) {
             noCallHome: true,
             noCheckCertificate: true,
             preferFreeFormats: true,
+            verbose: true,
             referer: 'https://www.tiktok.com'
         });
         return {
