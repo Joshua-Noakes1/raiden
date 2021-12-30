@@ -2,8 +2,8 @@ const lcl = require('cli-color'),
     path = require('path'),
     {
         create: createYoutubeDl
-    } = require('youtube-dl-exec');
-const ytdlp = createYoutubeDl(path.join(__dirname, process.platform == 'win32' ? 'ytdlp-exec.exe' : 'ytdlp-exec'));
+    } = require('youtube-dl-exec'),
+    ytdlp = createYoutubeDl(path.join(__dirname, process.platform == 'win32' ? 'ytdlp-exec.exe' : 'ytdlp-exec'));
 
 async function execDownload(videoURL) {
     try {

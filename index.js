@@ -13,6 +13,14 @@ const client = new Client({
 });
 
 client.on('ready', async (client) => {
+    // console log we are in
+    console.log(lcl.blue("[Discord - Info]"), "Logged in as", `"${lcl.yellow(`${client.user.tag}`)}"`);
+
+    // set bot status
+    client.user.setPresence({
+        status: "dnd"
+    });
+
     // command handler
     await new WOKCommands(client, {
         commandsDir: path.join(__dirname, 'commands'),
@@ -21,13 +29,6 @@ client.on('ready', async (client) => {
         testServers: ['909103932406640660'],
         botOwners: ['412876072540045312'],
     });
-
-    // set bot status
-    client.user.setPresence({
-        status: "dnd"
-    });
-    // console log we are in
-    console.log(lcl.blue("[Discord - Info]"), "Logged in as", `"${lcl.yellow(`${client.user.tag}`)}"`);
 });
 
 // try and login (i dont actually know if this works or not)

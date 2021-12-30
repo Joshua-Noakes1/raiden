@@ -2,8 +2,8 @@ const lcl = require('cli-color'),
     path = require('path'),
     downloadCore = require('../../bin/ytdlp/download/ytdlpCore'),
     videoExec = require('../../bin/ytdlp/bin/ytdlpExec'),
-    downloadVideo = require('../../bin/ytdlp/videos/downloadVideo'),
-    dateTime = require('../../bin/dateTime'),
+    downloadMedia = require('../../bin/ytdlp/videos/downloadMedia'),
+    getVideoData = require('./lib/getVideoData'),
     {
         unlinkSync
     } = require('fs'),
@@ -23,7 +23,7 @@ module.exports = {
 
     options: [{
         name: 'url',
-        description: 'The URL of the TikTok video to download',
+        description: 'Downloads a single video from TikTok',
         required: true,
         type: discordjs.Constants.ApplicationCommandOptionTypes.STRING
     }],
@@ -35,7 +35,7 @@ module.exports = {
         await interaction.deferReply();
 
         // check for ytdlp updates
-        console.log(lcl.blue("[Discord - Info]"), "Checking for YTDLP updates...");
+        console.log(lcl.blue("[YTDLP - Info]"), "Checking for YTDLP updates...");
         var ytdlpUpdate = await downloadCore();
         if (ytdlpUpdate.success == false) {
             // build YTDLP error embed
@@ -53,7 +53,7 @@ module.exports = {
         }
 
         // get video info
-        console.log(lcl.blue("[Discord - Info]"), "Getting video info...");
+        console.log(lcl.blue("[YTDLP - Info]"), "Getting video info...");
         var tiktokVideoExec = await videoExec(await interaction.options.getString('url'));
 
         if (tiktokVideoExec.success == false) {
@@ -72,45 +72,22 @@ module.exports = {
         }
 
         // store video urls etc and data 
-        var tiktokVideoData = {
-            video: {
-                meta: {
-                    author: {
-                        username: tiktokVideoExec.videoResult.uploader,
-                        name: tiktokVideoExec.videoResult.creator,
-                        id: tiktokVideoExec.videoResult.uploader_id
-                    },
-                    title: tiktokVideoExec.videoResult.title,
-                    url: `https://www.tiktok.com/@${tiktokVideoExec.videoResult.uploader}/video/${tiktokVideoExec.videoResult.id}`,
-                    viewCount: tiktokVideoExec.videoResult.view_count,
-                    likeCount: tiktokVideoExec.videoResult.like_count,
-                    commentCount: tiktokVideoExec.videoResult.comment_count,
-                    repostCount: tiktokVideoExec.videoResult.repost_count,
-                    uploadDate: await dateTime(tiktokVideoExec.videoResult.timestamp)
-                },
-                video: {
+        var tiktokVideoData = await getVideoData(tiktokVideoExec);
 
-                },
-                images: {
-
-                },
-                audio: {
-
-                }
-            }
-        };
-
-        console.log(tiktokVideoExec.videoResult)
+        console.log(tiktokVideoData);
 
         // try and download video
-        var video = await downloadVideo(tiktokVideoExec.videoResult.formats[0].url);
-        console.log(video);
+        var video = await downloadMedia(tiktokVideoData.video.video.watermarked.url, tiktokVideoData.video.video.watermarked.ext);
+        var videoClean = await downloadMedia(tiktokVideoData.video.video.raw.url, tiktokVideoData.video.video.raw.ext);
+        var cover = await downloadMedia(tiktokVideoData.video.images.cover, 'png');
+        console.log(cover);
 
         // build video embed
         const videoEmbed = new MessageEmbed()
-            .setTitle(`@${tiktokVideoData.video.meta.author.username} (${tiktokVideoData.video. meta.author.id})`)
+            .setTitle(`@${tiktokVideoData.video.meta.author.username} (${tiktokVideoData.video.meta.author.name} - ${tiktokVideoData.video. meta.author.id})`)
             .setURL(tiktokVideoData.video.meta.url)
             .setColor("#ff0000") // TODO - Make Random for the funny
+            .setThumbnail(`attachment://${cover.videoUUID}.png`)
             .addFields({
                 name: "Creator Username",
                 value: `${tiktokVideoData.video.meta.author.username}`,
@@ -124,18 +101,52 @@ module.exports = {
                 value: `${tiktokVideoData.video.meta.uploadDate.date}/${tiktokVideoData.video.meta.uploadDate.month}/${tiktokVideoData.video.meta.uploadDate.year} ${tiktokVideoData.video.meta.uploadDate.time.hour}:${tiktokVideoData.video.meta.uploadDate.time.minutes}`,
                 inline: true
             })
+            .addFields({
+                name: "Video Views",
+                value: `${tiktokVideoData.video.meta.viewCount}`,
+                inline: true
+            }, {
+                name: "Video Likes",
+                value: `${tiktokVideoData.video.meta.likeCount}`,
+                inline: true
+            }, {
+                name: "Video Comment(s)",
+                value: `${tiktokVideoData.video.meta.commentCount}`,
+                inline: true
+            })
+            .addFields({
+                name: "Track Name",
+                value: `${tiktokVideoData.video.audio.trackname}`,
+                inline: true
+            }, {
+                name: "Track Album",
+                value: `${tiktokVideoData.video.audio.album}`,
+                inline: true
+            }, {
+                name: "Track Artist",
+                value: `${tiktokVideoData.video.audio.artist}`,
+                inline: true
+            })
             .setTimestamp();
         // test
         await interaction.editReply({
             embeds: [videoEmbed],
             files: [{
+                attachment: cover.path,
+                name: `${cover.videoUUID}.${cover.ext}`
+            }, {
                 attachment: video.path,
-                name: `${video.videoUUID}.mp4`
+                name: `${video.videoUUID}.${video.ext}`
+            }, {
+                attachment: videoClean.path,
+                name: `${videoClean.videoUUID}.${videoClean.ext}`
             }]
         });
 
         //remove video
         await unlinkSync(video.path);
+        await unlinkSync(videoClean.path);
+        await unlinkSync(cover.path);
 
         return;
     },
