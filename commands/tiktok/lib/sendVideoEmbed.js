@@ -4,13 +4,18 @@ const lcl = require('cli-color'),
         MessageEmbed
     } = require('discord.js');
 
-async function sendVideoEmbed(interaction) {
+async function sendVideoEmbed(interaction, tiktokVideoData, mediaDownload) {
+    // console.log(lcl.blue("[Discord - Info]"), `Sending video embed... (ID: ${videoData.video.meta.videoID})`);
+
+    // embed colors
+    var embedColor = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff', '#000000', '#ffffff'];
+
     // build video embed
     const videoEmbed = new MessageEmbed()
         .setTitle(`@${tiktokVideoData.video.meta.author.username} (${tiktokVideoData.video.meta.author.name} - ${tiktokVideoData.video. meta.author.id})`)
         .setURL(tiktokVideoData.video.meta.url)
-        .setColor("#ff0000") // TODO - Make Random for the funny
-        .setThumbnail(`attachment://${cover.videoUUID}.png`)
+        .setColor(embedColor[Math.floor(Math.random() * embedColor.length)])
+        .setThumbnail(`attachment://${mediaDownload.image.static.videoUUID}.${mediaDownload.image.static.ext}`)
         .addFields({
             name: "Creator Username",
             value: `${tiktokVideoData.video.meta.author.username}`,
@@ -21,7 +26,7 @@ async function sendVideoEmbed(interaction) {
             inline: true
         }, {
             name: "Upload Date",
-            value: `${tiktokVideoData.video.meta.uploadDate.date}/${tiktokVideoData.video.meta.uploadDate.month}/${tiktokVideoData.video.meta.uploadDate.year} ${tiktokVideoData.video.meta.uploadDate.time.hour}:${tiktokVideoData.video.meta.uploadDate.time.minutes}`,
+            value: `${tiktokVideoData.video.meta.uploadDate.date}/${tiktokVideoData.video.meta.uploadDate.month}/${tiktokVideoData.video.meta.uploadDate.year} ${tiktokVideoData.video.meta.uploadDate.time.hour}:${tiktokVideoData.video.meta.uploadDate.time.minutes} (UTC)`,
             inline: true
         })
         .addFields({
@@ -51,6 +56,24 @@ async function sendVideoEmbed(interaction) {
             inline: true
         })
         .setTimestamp();
+
+    // build embed
+    await interaction.followUp({
+        embeds: [videoEmbed],
+        files: [{
+            attachment: mediaDownload.image.static.path,
+            name: `${mediaDownload.image.static.videoUUID}.${mediaDownload.image.static.ext}`
+        }, {
+            attachment: mediaDownload.image.dynamic.path,
+            name: `${mediaDownload.image.dynamic.videoUUID}.${mediaDownload.image.dynamic.ext}`
+        }, {
+            attachment: mediaDownload.video.watermarked.path,
+            name: `${mediaDownload.video.watermarked.videoUUID}.${mediaDownload.video.watermarked.ext}`
+        }, {
+            attachment: mediaDownload.video.raw.path,
+            name: `${mediaDownload.video.raw.videoUUID}.${mediaDownload.video.raw.ext}`
+        }]
+    });
 }
 
 module.exports = sendVideoEmbed;
