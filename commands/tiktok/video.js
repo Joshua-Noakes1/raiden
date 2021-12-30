@@ -93,7 +93,7 @@ module.exports = {
         // tell user that the url might look strange
         const videoURLEmbed = new MessageEmbed()
             .setTitle('Info - Video URL')
-            .setDescription('The video URL might look strange, it\'s a link the the ID of the user and the video ID\n If the user changes their username this url should still point to the video')
+            .setDescription('The video URL might look strange, but it does work!\n If the user changes their username this url should still point to the video')
             .setColor('#00ff00')
             .setTimestamp();
         await interaction.editReply({
@@ -166,10 +166,10 @@ module.exports = {
         });
 
         //remove video
-        await unlinkSync(mediaDownload.image.static.path);
-        await unlinkSync(mediaDownload.image.dynamic.path);
-        await unlinkSync(mediaDownload.video.watermarked.path);
-        await unlinkSync(mediaDownload.video.raw.path);
+        // await unlinkSync(mediaDownload.image.static.path);
+        // await unlinkSync(mediaDownload.image.dynamic.path);
+        // await unlinkSync(mediaDownload.video.watermarked.path);
+        // await unlinkSync(mediaDownload.video.raw.path);
 
         return;
     },
