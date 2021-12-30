@@ -32,7 +32,9 @@ module.exports = {
         interaction
     }) => {
         // delay discord reply so we have time to make image
-        await interaction.deferReply();
+        await interaction.deferReply({
+            ephemeral: true
+        });
 
         // check for ytdlp updates
         console.log(lcl.blue("[YTDLP - Info]"), "Checking for YTDLP updates...");
@@ -71,6 +73,8 @@ module.exports = {
             return;
         }
 
+        // Start real download
+
         // store video urls etc and data 
         var tiktokVideoData = await getVideoData(tiktokVideoExec);
 
@@ -86,28 +90,86 @@ module.exports = {
             }
         }
 
+        // tell user that the url might look strange
+        const videoURLEmbed = new MessageEmbed()
+            .setTitle('Info - Video URL')
+            .setDescription('The video URL might look strange, it\'s a link the the ID of the user and the video ID\n If the user changes their username this url should still point to the video')
+            .setColor('#00ff00')
+            .setTimestamp();
+        await interaction.editReply({
+            embeds: [videoURLEmbed],
+            ephemeral: true
+        });
+
         // build video embed
         const videoEmbed = new MessageEmbed()
-            
+            .setTitle(`@${tiktokVideoData.video.meta.author.username} (${tiktokVideoData.video.meta.author.name} - ${tiktokVideoData.video. meta.author.id})`)
+            .setURL(tiktokVideoData.video.meta.url)
+            .setColor("#ff0000") // TODO - Make Random for the funny
+            .setThumbnail(`attachment://${mediaDownload.image.static.videoUUID}.${mediaDownload.image.static.ext}`)
+            .addFields({
+                name: "Creator Username",
+                value: `${tiktokVideoData.video.meta.author.username}`,
+                inline: true
+            }, {
+                name: "Creator Name",
+                value: `${tiktokVideoData.video.meta.author.name}`,
+                inline: true
+            }, {
+                name: "Upload Date",
+                value: `${tiktokVideoData.video.meta.uploadDate.date}/${tiktokVideoData.video.meta.uploadDate.month}/${tiktokVideoData.video.meta.uploadDate.year} ${tiktokVideoData.video.meta.uploadDate.time.hour}:${tiktokVideoData.video.meta.uploadDate.time.minutes}`,
+                inline: true
+            })
+            .addFields({
+                name: "Video Views",
+                value: `${tiktokVideoData.video.meta.viewCount}`,
+                inline: true
+            }, {
+                name: "Video Likes",
+                value: `${tiktokVideoData.video.meta.likeCount}`,
+                inline: true
+            }, {
+                name: "Video Comment(s)",
+                value: `${tiktokVideoData.video.meta.commentCount}`,
+                inline: true
+            })
+            .addFields({
+                name: "Track Name",
+                value: `${tiktokVideoData.video.audio.trackname}`,
+                inline: true
+            }, {
+                name: "Track Album",
+                value: `${tiktokVideoData.video.audio.album}`,
+                inline: true
+            }, {
+                name: "Track Artist",
+                value: `${tiktokVideoData.video.audio.artist}`,
+                inline: true
+            })
+            .setTimestamp();
         // test
-        await interaction.editReply({
+        await interaction.followUp({
             embeds: [videoEmbed],
             files: [{
-                attachment: cover.path,
-                name: `${cover.videoUUID}.${cover.ext}`
+                attachment: mediaDownload.image.static.path,
+                name: `${mediaDownload.image.static.videoUUID}.${mediaDownload.image.static.ext}`
             }, {
-                attachment: video.path,
-                name: `${video.videoUUID}.${video.ext}`
+                attachment: mediaDownload.image.dynamic.path,
+                name: `${mediaDownload.image.dynamic.videoUUID}.${mediaDownload.image.dynamic.ext}`
             }, {
-                attachment: videoClean.path,
-                name: `${videoClean.videoUUID}.${videoClean.ext}`
+                attachment: mediaDownload.video.watermarked.path,
+                name: `${mediaDownload.video.watermarked.videoUUID}.${mediaDownload.video.watermarked.ext}`
+            }, {
+                attachment: mediaDownload.video.raw.path,
+                name: `${mediaDownload.video.raw.videoUUID}.${mediaDownload.video.raw.ext}`
             }]
         });
 
         //remove video
-        await unlinkSync(video.path);
-        await unlinkSync(videoClean.path);
-        await unlinkSync(cover.path);
+        await unlinkSync(mediaDownload.image.static.path);
+        await unlinkSync(mediaDownload.image.dynamic.path);
+        await unlinkSync(mediaDownload.video.watermarked.path);
+        await unlinkSync(mediaDownload.video.raw.path);
 
         return;
     },

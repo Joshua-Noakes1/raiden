@@ -18,7 +18,11 @@ client.on('ready', async (client) => {
 
     // set bot status
     client.user.setPresence({
-        status: "dnd"
+        status: "dnd",
+        activities: [{
+            name: "TikTok",
+            type: "WATCHING"
+        }]
     });
 
     // command handler
