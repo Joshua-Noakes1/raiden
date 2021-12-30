@@ -1,11 +1,13 @@
 const lcl = require('cli-color'),
-    path = require('path'),
+    {
+        unlinkSync
+    } = require('fs'),
     {
         MessageEmbed
     } = require('discord.js');
 
 async function sendVideoEmbed(interaction, tiktokVideoData, mediaDownload) {
-    // console.log(lcl.blue("[Discord - Info]"), `Sending video embed... (ID: ${videoData.video.meta.videoID})`);
+    console.log(lcl.blue("[Discord - Info]"), `Sending video embed... (ID: ${tiktokVideoData.video.meta.videoID})`);
 
     // embed colors
     var embedColor = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff', '#000000', '#ffffff'];
@@ -74,6 +76,12 @@ async function sendVideoEmbed(interaction, tiktokVideoData, mediaDownload) {
             name: `${mediaDownload.video.raw.videoUUID}.${mediaDownload.video.raw.ext}`
         }]
     });
+
+    //remove video
+    await unlinkSync(mediaDownload.image.static.path);
+    await unlinkSync(mediaDownload.image.dynamic.path);
+    await unlinkSync(mediaDownload.video.watermarked.path);
+    await unlinkSync(mediaDownload.video.raw.path);
 }
 
 module.exports = sendVideoEmbed;
