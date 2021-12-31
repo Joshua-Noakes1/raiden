@@ -8,7 +8,7 @@ const lcl = require('cli-color'),
     } = require('fs'),
     fetch = require('node-fetch');
 
-async function downloadMedia(url, ext) {
+async function downloadMedia(url, mediaExt) {
     // download video url
     console.log(lcl.blue("[Fetch - Info]"), "Downloading media...");
     try {
@@ -19,15 +19,15 @@ async function downloadMedia(url, ext) {
         var videoUUID = uuidv4();
 
         // save video and return info
-        console.log(lcl.blue("[Fetch - Info]"), "Saving media...");
-        await writeFileSync(path.join(__dirname, 'static', `${videoUUID}.${ext}`), videoResult);
+        console.log(lcl.blue("[Fetch - Info]"), `Saving media(${mediaExt})...`);
+        await writeFileSync(path.join(__dirname, 'static', `${videoUUID}.${mediaExt}`), videoResult);
 
         // return to client 
         return {
             success: true,
             videoUUID,
-            path: path.join(__dirname, 'static', `${videoUUID}.${ext}`),
-            ext
+            path: path.join(__dirname, 'static', `${videoUUID}.${mediaExt}`),
+            ext: mediaExt
         }
 
     } catch (error) {

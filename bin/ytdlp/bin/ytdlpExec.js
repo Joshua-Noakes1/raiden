@@ -24,8 +24,7 @@ async function execDownload(videoURL) {
     } catch (error) {
         console.log(lcl.red("[YTDLP Download - Error]"), "Failed to download video with YTDLP", error);
         return {
-            success: false,
-            message: "Failed to download video with YTDLP"
+            success: false
         };
     }
 }

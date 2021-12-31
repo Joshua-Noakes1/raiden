@@ -22,12 +22,13 @@ async function fetchDownload(URL, platform) {
 
         // return success
         return {
-            success: true,
-            message: `Downloaded YTDLP`
+            success: true
         };
     } catch (error) {
         console.log(lcl.red("[YTDLP Download - Error]"), "Failed to download YTDLP", error);
-        return {success: false, error}
+        return {
+            success: false
+        }
     }
 }
 

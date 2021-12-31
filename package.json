@@ -25,6 +25,7 @@
     "file-type": "^17.1.1",
     "node-fetch": "^2.6.6",
     "path": "^0.12.7",
+    "url-parse": "^1.5.4",
     "uuid": "^8.3.2",
     "wokcommands": "^1.5.3",
     "youtube-dl-exec": "^2.0.2"

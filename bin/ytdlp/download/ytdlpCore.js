@@ -31,21 +31,23 @@ async function downloadCore() {
                 await writeJSON(path.join(__dirname, 'version.json'), version, true);
                 console.log(lcl.green('[YTDLP Download - Success]'), `Updated YTDLP version (${version.version})`);
                 return {
-                    success: true,
-                    message: `Updated YTDLP version to ${version.version}`
+                    success: true
                 };
             } else {
-                return {success: false}
+                return {
+                    success: false
+                }
             }
         } else {
             console.log(lcl.blue('[YTDLP Download - Info]'), `YTDLP is up to date (${version.version})`);
             return {
-                success: true,
-                message: 'YTDLP is up to date'
+                success: true
             }
         }
     } else {
-        return {success: false}
+        return {
+            success: false
+        }
     }
 }
 
