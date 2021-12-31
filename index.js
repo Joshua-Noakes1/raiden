@@ -30,7 +30,7 @@ client.on('ready', async (client) => {
         commandsDir: path.join(__dirname, 'commands'),
         showWarns: false, // not using mongodb so to stop warnings
         ignoreBots: false,
-        testServers: ['909103932406640660'],
+        testServers: ['909103932406640660', '793215810805825577'],
         botOwners: ['412876072540045312'],
     });
 });
