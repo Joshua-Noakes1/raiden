@@ -19,6 +19,7 @@ async function getDownloadURL() {
             }
         }
 
+        // TODO Loop over and find the proper index for the platforms
         // get newest version for platform
         switch (process.platform) {
             case 'win32': // windows

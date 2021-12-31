@@ -25,9 +25,9 @@ async function downloadMedia(url, mediaExt) {
         // return to client 
         return {
             success: true,
-            videoUUID,
+            UUID: videoUUID,
             path: path.join(__dirname, 'static', `${videoUUID}.${mediaExt}`),
-            ext: mediaExt
+            format: mediaExt
         }
 
     } catch (error) {

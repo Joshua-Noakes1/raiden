@@ -10,12 +10,7 @@ async function execDownload(videoURL) {
         // get video info
         var videoResult = await ytdlp(videoURL, {
             dumpSingleJson: true,
-            noWarnings: true,
-            noCallHome: true,
-            noCheckCertificate: true,
-            preferFreeFormats: true,
-            verbose: true,
-            referer: 'https://www.tiktok.com'
+            verbose: true
         });
         return {
             success: true,

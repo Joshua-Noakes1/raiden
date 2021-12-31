@@ -1,7 +1,7 @@
 const lcl = require('cli-color'),
     urlParse = require('url-parse'),
     updateYTDLP = require('../../bin/ytdlp/download/ytdlpCore'),
-    videoYTDLP = require('../../bin/ytdlp/bin/ytdlpExec'),
+    videoHandle = require('./lib/videoHandle'),
     {
         MessageEmbed,
         Constants
@@ -16,7 +16,7 @@ module.exports = {
 
     options: [{
         name: 'url',
-        description: 'Single video from TikTok eg: vm.tiktok.com/x/x', // example 
+        description: 'Single video from TikTok eg: vm.tiktok.com/ZM8K5XLfV', // example 
         required: true,
         type: Constants.ApplicationCommandOptionTypes.STRING
     }],
@@ -34,7 +34,7 @@ module.exports = {
         const parsedVideoURL = new urlParse(videoURL);
 
         // Check if URL is valid
-        if (!parsedVideoURL.hostname.includes("tiktok")) { // vm.tiktok.com - Mobile Share URL, www.tiktok.com - Desktop Share URL
+        if (parsedVideoURL.hostname.match(/^(?:https?:\/\/)?(?:vm\.)?(?:www\.)?tiktok\.com/gm) == null) { // vm.tiktok.com - Mobile Share URL, www.tiktok.com - Desktop Share URL
             console.log(lcl.red("[TikTok Video - Error]"), "Invalid URL");
             const videoURLErrorEmbed = new MessageEmbed()
                 .setTitle("Video URL Error")
@@ -64,12 +64,33 @@ module.exports = {
             return;
         }
 
-        // fetch video info
-        const tiktokVideo = await videoYTDLP(videoURL);
-        console.log(tiktokVideo);
+        // return info embed
+        const videoInfoEmbed = new MessageEmbed()
+            .setTitle("Video Info")
+            .addFields([{
+                name: "Strange Video URL",
+                value: "The video URL might look odd but it is correct and will send you to the video.",
+                inline: true
+            }, {
+                name: "Dynamic Cover GIF",
+                value: "Discord has an issue with displaying the dynamic cover GIF, so it is not displayed.",
+                inline: true
+            }, {
+                name: "Stuck with just this embed?",
+                value: "Accore is downloading the video in the background, please wait...",
+                inline: true
+            }])
+            .setColor("#00ff00")
+            .setTimestamp();
 
-        // log new video
-        console.log(lcl.blue("[TikTok Video - Info]"), "New video");
+        // return info embed
+        await interaction.editReply({
+            embeds: [videoInfoEmbed]
+        });
+
+
+        // start video handle
+        await videoHandle(interaction, videoURL);
         return;
     },
 }
