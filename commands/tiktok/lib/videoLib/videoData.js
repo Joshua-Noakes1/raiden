@@ -21,7 +21,7 @@ async function videoData(tiktokVideoExec) {
 
     return {
         success: true,
-        type: tiktokVideoExec.videoResult.extractor_key,
+        type: tiktokVideoExec.videoResult.extractor_key == 'TikTokUser' ? 'account' : 'video',
         videos
     }
 }

@@ -11,7 +11,7 @@ const lcl = require('cli-color'),
         unlinkSync
     } = require('fs');
 
-async function videoHandle(interaction, videoURL) {
+async function videoHandle(interaction, videoURL, callType, oldestFirst) {
     // fetch video info
     const tiktokVideoExec = await videoYTDLP(videoURL);
     if (tiktokVideoExec.success == false) {
@@ -41,6 +41,35 @@ async function videoHandle(interaction, videoURL) {
         });
         return;
     }
+
+    // /video and /account commands
+    if (callType != videoDataResult.type) {
+        switch (callType) {
+            case 'video':
+                var videoErrorEmbed = new MessageEmbed()
+                    .setTitle("Video Type Error")
+                    .setDescription("Use /account to get a list of videos")
+                    .setColor("#ff0000")
+                    .setTimestamp();
+                break;
+            case 'account':
+                var videoErrorEmbed = new MessageEmbed()
+                    .setTitle("Video Type Error")
+                    .setDescription("Use /video to get a single video")
+                    .setColor("#ff0000")
+                    .setTimestamp();
+                break;
+
+        }
+
+        await interaction.editReply({
+            embeds: [videoErrorEmbed]
+        });
+        return;
+    }
+
+    // flip array if oldest first
+    if (oldestFirst) videoDataResult.videos.reverse();
 
     // loop over video data result and send embeds 
     await asyncForEach(videoDataResult.videos, async (video, index, array) => {
@@ -77,13 +106,11 @@ async function videoHandle(interaction, videoURL) {
             name: `${videoDynamicThumb.UUID}.${videoDynamicThumb.format}`
         });
 
-        console.log(array.length);
-
         // create embed
         const videoEmbed = new MessageEmbed()
-            .setTitle(`@${videoData.meta.author.authorUsername} (${videoData.meta.author.authorName} - ${videoData.meta.author.authorID} | ${array.length > 1 ? `Video ${index + 1} of ${array.length}` : ''})`)
+            .setTitle(`@${videoData.meta.author.authorUsername} (${videoData.meta.author.authorName} - ${videoData.meta.author.authorID}${array.length > 1 ? ` | Video ${index + 1} of ${array.length}` : ''})`)
             .setURL(videoData.meta.URL.video)
-            .setColor(embedColors[index % embedColors.length])
+            .setColor(embedColors[Math.floor(Math.random() * embedColors.length)])
             .setThumbnail(`attachment://${videoThumb.UUID}.${videoThumb.format}`)
             .addFields([{
                 name: "Creator Username",

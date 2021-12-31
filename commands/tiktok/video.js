@@ -90,7 +90,7 @@ module.exports = {
 
 
         // start video handle
-        await videoHandle(interaction, videoURL);
+        await videoHandle(interaction, videoURL, 'video');
         return;
     },
 }
