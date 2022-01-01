@@ -24,9 +24,9 @@ async function getDownloadURL() {
             unix: -1,
             win: -1
         }
-        await asyncForEach(githubAPI[0].assets, async (asset, index, array) => {
+        await asyncForEach(githubAPI[0].assets, async (asset, index) => {
             if (asset.content_type == "application/octet-stream" && asset.name == "yt-dlp") releaseIndex.unix = index;
-            if (asset.content_type == "application/vnd.microsoft.portable-executable") releaseIndex.win = index;
+            if (asset.content_type == "application/vnd.microsoft.portable-executable" && asset.name == "yt-dlp.exe") releaseIndex.win = index;
         });
 
         // get newest version for platform
