@@ -2,8 +2,8 @@
 
 ## Introduction
 
-What is accore?
-accore is a Discord bot built to fetch all versions (watermarked and un-watermarked) of a TikTok video from the videos URL, it also grabs metrics from the video such as like count, comment count and much more.
+What is accore?   
+accore is a Discord bot built to fetch all versions (watermarked and un-watermarked) of a TikTok video. It also grabs metrics from the video such as like count, comment count and much more.
 
 https://user-images.githubusercontent.com/53623449/147841172-4e9eedd1-6682-4ad4-8515-241e9d27d1c0.mp4
 
