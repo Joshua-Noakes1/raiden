@@ -80,20 +80,20 @@ async function videoHandle(interaction, videoURL, callType, oldestFirst) {
         const attachments = [];
 
         // downloads videos is smaller then 8mb
-        if (videoData.videos.watermarked.watermarkedSize >= 0 && videoData.videos.watermarked.watermarkedSize <= 8000000) {
-            var videoWatermarked = await downloadMedia(videoData.videos.watermarked.watermarkedURL, videoData.videos.watermarked.watermarkedFormat);
-            attachments.push({
-                attachment: videoWatermarked.path,
-                name: `${videoWatermarked.UUID}.${videoWatermarked.format}`
-            });
-        }
-        if (videoData.videos.raw.rawSize >= 0 && videoData.videos.raw.rawSize <= 8000000) {
-            var videoRaw = await downloadMedia(videoData.videos.raw.rawURL, videoData.videos.raw.rawFormat);
-            attachments.push({
-                attachment: videoRaw.path,
-                name: `${videoRaw.UUID}.${videoRaw.format}`
-            });
-        }
+        // if (videoData.videos.watermarked.watermarkedSize >= 0 && videoData.videos.watermarked.watermarkedSize <= 8000000) {
+        //     var videoWatermarked = await downloadMedia(videoData.videos.watermarked.watermarkedURL, videoData.videos.watermarked.watermarkedFormat);
+        //     attachments.push({
+        //         attachment: videoWatermarked.path,
+        //         name: `${videoWatermarked.UUID}.${videoWatermarked.format}`
+        //     });
+        // }
+        // if (videoData.videos.raw.rawSize >= 0 && videoData.videos.raw.rawSize <= 8000000) {
+        //     var videoRaw = await downloadMedia(videoData.videos.raw.rawURL, videoData.videos.raw.rawFormat);
+        //     attachments.push({
+        //         attachment: videoRaw.path,
+        //         name: `${videoRaw.UUID}.${videoRaw.format}`
+        //     });
+        // }
         // download thumbnails
         var videoThumb = await downloadMedia(videoData.images.imageCover, 'png');
         attachments.push({
@@ -155,13 +155,25 @@ async function videoHandle(interaction, videoURL, callType, oldestFirst) {
             .setTimestamp();
 
         // send embed
-        console.log(lcl.blue("[TikTok - Info]"), `Uploading embed, This may take a while...`);
-        await interaction.followUp({
-            embeds: [videoEmbed],
-            files: attachments
-        });
-        console.log(lcl.green("[Tiktok - Success]"), `Embed ${index + 1} of ${array.length} sent successfully`);
-
+        try {
+            console.log(lcl.blue("[TikTok - Info]"), `Uploading embed, This may take a while...`);
+            await interaction.followUp({
+                embeds: [videoEmbed],
+                files: attachments
+            });
+            console.log(lcl.green("[Tiktok - Success]"), `Embed ${index + 1} of ${array.length} sent successfully`);
+        } catch (error) {
+            console.log(lcl.red("[TikTok - Error]"), `Failed to send embed ${index + 1} of ${array.length}`);
+            console.log(lcl.red("[TikTok - Error]"), error);
+            const videoErrorEmbed = new MessageEmbed()
+                .setTitle(`Video Embed Error${array.length > 1 ? ` (Video ${index + 1} of ${array.length})` : ''}`)
+                .setDescription("Failed to send embed, Please try again...")
+                .setColor("#ff0000")
+                .setTimestamp();
+            await interaction.followUp({
+                embeds: [videoErrorEmbed]
+            });
+        }
         // delete media files
         await unlinkSync(videoThumb.path);
         await unlinkSync(videoDynamicThumb.path);
@@ -172,7 +184,6 @@ async function videoHandle(interaction, videoURL, callType, oldestFirst) {
     return {
         success: true
     };
-
 }
 
 // fix callback hell 

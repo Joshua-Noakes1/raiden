@@ -4,7 +4,7 @@ const lcl = require('cli-color'),
 
 // make request to github api to get newest version of ytdlp and return the download url for platform
 async function getDownloadURL() {
-    if (process.env.REPO == undefined || process.env.REPO == '') process.env.REPO = 'ytdlp/ytdlp'; // default repo
+    if (process.env.REPO == undefined || process.env.REPO == '') process.env.REPO = 'yt-dlp/yt-dlp'; // default repo
 
     try {
         // get api
@@ -19,15 +19,30 @@ async function getDownloadURL() {
             }
         }
 
-        // TODO Loop over and find the proper index for the platforms
+        // get release index
+        var releaseIndex = {
+            unix: -1,
+            win: -1
+        }
+        await asyncForEach(githubAPI[0].assets, async (asset, index, array) => {
+            if (asset.content_type == "application/octet-stream" && asset.name == "yt-dlp") releaseIndex.unix = index;
+            if (asset.content_type == "application/vnd.microsoft.portable-executable") releaseIndex.win = index;
+        });
+
         // get newest version for platform
         switch (process.platform) {
             case 'win32': // windows
-                var ytdlpDownload = githubAPI[0].assets[3].browser_download_url;
+                if (releaseIndex.win == -1) return {
+                    success: false
+                }
+                var ytdlpDownload = githubAPI[0].assets[releaseIndex.win].browser_download_url;
                 break;
             case 'linux': // linux / unix
             case 'darwin': // mac
-                var ytdlpDownload = githubAPI[0].assets[2].browser_download_url;
+                if (releaseIndex.unix == -1) return {
+                    success: false
+                }
+                var ytdlpDownload = githubAPI[0].assets[releaseIndex.unix].browser_download_url;
                 break;
             default: // catch all
                 console.log(lcl.red("[YTDLP Download - Error]"), `Failed to find compatilble download for your system (${process.platform} - https://github.com/${process.env.REPO}/releases)`);
@@ -49,6 +64,13 @@ async function getDownloadURL() {
         return {
             success: false
         }
+    }
+}
+
+// fix callback hell 
+async function asyncForEach(array, callback) {
+    for (let index = 0; index < array.length; index++) {
+        await callback(array[index], index, array);
     }
 }
 
