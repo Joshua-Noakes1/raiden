@@ -153,15 +153,15 @@ async function videoHandle(interaction, videoURL, callType, oldestFirst) {
             }])
             .addFields([{
                 name: "Track Name",
-                value: `${videoData.audio.audioTrackname}`,
+                value: `${videoData.audio.audioTrackname != null ? videoData.audio.audioTrackname : 'Unknown'}`,
                 inline: true
             }, {
                 name: "Track Album",
-                value: `${videoData.audio.audioAlbum}`,
+                value: `${videoData.audio.audioAlbum != null ? videoData.audio.audioAlbum : 'Unknown'}`,
                 inline: true
             }, {
                 name: "Track Artist",
-                value: `${videoData.audio.audioArtist}`,
+                value: `${videoData.audio.audioArtist != null ? videoData.audio.audioArtist : 'Unknown'}`,
                 inline: true
             }])
             .setFooter(`Upload Date: ${videoData.meta.uploadDateTime.date}${videoData.meta.uploadDateTime.ordinal} ${videoData.meta.uploadDateTime.monthName} ${videoData.meta.uploadDateTime.year} ${videoData.meta.uploadDateTime.time.hour}:${videoData.meta.uploadDateTime.time.minutes}`)
@@ -170,6 +170,7 @@ async function videoHandle(interaction, videoURL, callType, oldestFirst) {
         // send embed
         try {
             console.log(lcl.blue("[TikTok - Info]"), `Uploading embed, This may take a while...`);
+            // TODO This wont be here forever but for now its easier to just say the video has been removed, I will fix this later
             if (checkedAttachments.attachments.length < 4) await interaction.followUp(`**All videos were too large to upload so TikTok\'s watermarked video has been removed**${array.length > 1 ? ` (Video ${index + 1} of ${array.length})` : ''}`);
             await interaction.followUp({
                 embeds: [videoEmbed],
