@@ -16,7 +16,7 @@ async function downloadCore() {
         version: '0.0.0'
     };
 
-    if (process.env.UPDATE == 'false') {
+    if (process.env.UPDATE == 'false' && version.version != '0.0.0') {
         console.log(lcl.yellow("[YTDLP - Warn]"), "Auto-update disabled, skipping update check... (This isn't recomended as TikTok often changes their website and API so old versions of YTDLP will break)");
         return {
             success: true
@@ -52,6 +52,7 @@ async function downloadCore() {
             }
         }
     } else {
+        console.log(lcl.red("[Github API - Error]"), "Failed to get latest version from github");
         return {
             success: false
         }

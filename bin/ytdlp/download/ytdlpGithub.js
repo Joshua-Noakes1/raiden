@@ -13,7 +13,7 @@ async function getDownloadURL() {
 
         // check if repo exists
         if (githubAPI.message) {
-            console.log(lcl.red("[YTDLP Download - Error]"), "Failed to find Github repo");
+            console.log(lcl.red("[Github API - Error]"), "Failed to find Github repo");
             return {
                 success: false
             }
@@ -26,26 +26,32 @@ async function getDownloadURL() {
         }
         await asyncForEach(githubAPI[0].assets, async (asset, index) => {
             if (asset.content_type == "application/octet-stream" && asset.name == "yt-dlp") releaseIndex.unix = index;
-            if (asset.content_type == "application/vnd.microsoft.portable-executable" && asset.name == "yt-dlp.exe") releaseIndex.win = index;
+            if (asset.content_type == "application/vnd.microsoft.portable-executable" && (asset.name == "yt-dlp.exe" || asset.name == "yt-dlp_x86.exe")) releaseIndex.win = index;
         });
 
         // get newest version for platform
         switch (process.platform) {
             case 'win32': // windows
-                if (releaseIndex.win == -1) return {
-                    success: false
+                if (releaseIndex.win == -1) {
+                    console.log(lcl.red("[Github API - Error]"), "Failed to find latest version for Windows. Follow the instructions on the GitHub help page to download YTDLP for Windows");
+                    return {
+                        success: false
+                    }
                 }
                 var ytdlpDownload = githubAPI[0].assets[releaseIndex.win].browser_download_url;
                 break;
             case 'linux': // linux / unix
             case 'darwin': // mac
-                if (releaseIndex.unix == -1) return {
-                    success: false
+                if (releaseIndex.unix == -1) {
+                    console.log(lcl.red("[Github API - Error]"), "Failed to find latest version for Linux / MacOS. Follow the instructions on the GitHub help page to download YTDLP for Linux / MacOS");
+                    return {
+                        success: false
+                    }
                 }
                 var ytdlpDownload = githubAPI[0].assets[releaseIndex.unix].browser_download_url;
                 break;
             default: // catch all
-                console.log(lcl.red("[YTDLP Download - Error]"), `Failed to find compatilble download for your system (${process.platform} - https://github.com/${process.env.REPO}/releases)`);
+                console.log(lcl.red("[Github API - Error]"), `Failed to find compatilble download for your system (${process.platform} - https://github.com/${process.env.REPO}/releases)`);
                 return {
                     success: false
                 }
@@ -60,7 +66,7 @@ async function getDownloadURL() {
         };
 
     } catch (error) {
-        console.log(lcl.red("[YTDLP Download - Error]"), "Failed to download YTDLP from Github", error);
+        console.log(lcl.red("[Github API - Error]"), "Failed to download YTDLP from Github", error);
         return {
             success: false
         }
