@@ -92,21 +92,17 @@ async function videoHandle(interaction, videoURL, callType, oldestFirst) {
             name: `${videoDynamicThumb.UUID}.${videoDynamicThumb.format}`
         });
 
-        // downloads videos is smaller then 8mb
-        if (videoData.videos.watermarked.watermarkedSize >= 0 && videoData.videos.watermarked.watermarkedSize <= 8000000) {
-            var videoWatermarked = await downloadMedia(videoData.videos.watermarked.watermarkedURL, videoData.videos.watermarked.watermarkedFormat);
-            attachments.push({
-                attachment: videoWatermarked.path,
-                name: `${videoWatermarked.UUID}.${videoWatermarked.format}`
-            });
-        }
-        if (videoData.videos.raw.rawSize >= 0 && videoData.videos.raw.rawSize <= 8000000) {
-            var videoRaw = await downloadMedia(videoData.videos.raw.rawURL, videoData.videos.raw.rawFormat);
-            attachments.push({
-                attachment: videoRaw.path,
-                name: `${videoRaw.UUID}.${videoRaw.format}`
-            });
-        }
+        // downloads videos
+        var videoWatermarked = await downloadMedia(videoData.videos.watermarked.watermarkedURL, videoData.videos.watermarked.watermarkedFormat);
+        attachments.push({
+            attachment: videoWatermarked.path,
+            name: `${videoWatermarked.UUID}.${videoWatermarked.format}`
+        });
+        var videoRaw = await downloadMedia(videoData.videos.raw.rawURL, videoData.videos.raw.rawFormat);
+        attachments.push({
+            attachment: videoRaw.path,
+            name: `${videoRaw.UUID}.${videoRaw.format}`
+        });
 
         // check attachment size
         var checkedAttachments = await checkUploadSize(attachments);
