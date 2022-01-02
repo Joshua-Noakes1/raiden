@@ -21,7 +21,7 @@ async function discordUploadSize(path) {
     } catch (error) {
         console.log(lcl.red('[Discord - Error]'), 'Error while trying to get file size:', error);
         return {
-            size: 0,
+            size: 8000001, // set above 8MB so an upload to discord will fail
             success: false
         }
     }

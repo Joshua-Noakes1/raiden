@@ -121,7 +121,7 @@ async function videoHandle(interaction, videoURL, callType, oldestFirst) {
         // create embed
         const videoEmbed = new MessageEmbed()
             .setTitle(`@${videoData.meta.author.authorUsername} (${videoData.meta.author.authorName} - ${videoData.meta.author.authorID}${array.length > 1 ? ` | Video ${index + 1} of ${array.length}` : ''})`)
-            .setDescription(checkedAttachments.attachments.length >= 4 ? '' : '**All videos were too large to upload so TikTok\'s watermarked video has been removed**')
+            .setDescription(videoData.meta.videoTitle)
             .setURL(videoData.meta.URL.video)
             .setColor(embedColors[Math.floor(Math.random() * embedColors.length)])
             .setThumbnail(`attachment://${videoThumb.UUID}.${videoThumb.format}`)
@@ -170,6 +170,7 @@ async function videoHandle(interaction, videoURL, callType, oldestFirst) {
         // send embed
         try {
             console.log(lcl.blue("[TikTok - Info]"), `Uploading embed, This may take a while...`);
+            if (checkedAttachments.attachments.length < 4) await interaction.followUp(`**All videos were too large to upload so TikTok\'s watermarked video has been removed**${array.length > 1 ? ` (Video ${index + 1} of ${array.length})` : ''}`);
             await interaction.followUp({
                 embeds: [videoEmbed],
                 files: checkedAttachments.attachments
