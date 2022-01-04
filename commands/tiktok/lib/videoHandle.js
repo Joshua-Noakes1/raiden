@@ -1,4 +1,5 @@
 const lcl = require('cli-color'),
+    webpToGIF = require('./videoLib/webpToGIF'),
     videoData = require('./videoLib/videoData'),
     videoYTDLP = require('../../../bin/ytdlp/bin/ytdlpExec'),
     extractVideoData = require('./videoLib/extractVideoData'),
@@ -86,7 +87,15 @@ async function videoHandle(interaction, videoURL, callType, oldestFirst) {
             attachment: videoThumb.path,
             name: `${videoThumb.UUID}.${videoThumb.format}`
         });
-        var videoDynamicThumb = await downloadMedia(videoData.images.imageDynamic, 'gif');
+
+        // webp wont play in discord so we need to download it and convert it to gif
+        var videoDynamicThumb = await downloadMedia(videoData.images.imageDynamic, 'webp');
+        const videoDynamicWebP = await webpToGIF(videoDynamicThumb.path, videoDynamicThumb.pathFolder);
+
+        console.log(videoDynamicWebP);
+
+        process.exit(1);
+        
         attachments.push({
             attachment: videoDynamicThumb.path,
             name: `${videoDynamicThumb.UUID}.${videoDynamicThumb.format}`

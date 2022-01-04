@@ -23,7 +23,7 @@ accore uses Discord's slash command system to let the download TikTok videos.
 | REPO | The Github repo to download YT-DLP from | yt-dlp/yt-dlp | ✔ |
 | UPDATE | Weather or not to update YT-DLP | true | ✔ |
 
-### Shell
+### Shell (Not supported on Windows, does work on WSL)
 1. Git clone ```https://github.com/Joshua-Noakes1/accore.git```
 2. Add your enviroment variables into a .env file
 3. Run ```npm install```

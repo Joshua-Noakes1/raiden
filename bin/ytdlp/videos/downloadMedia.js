@@ -21,7 +21,8 @@ async function downloadMedia(url, mediaExt) {
         // save video and return info
         console.log(lcl.blue("[Fetch - Info]"), `Saving media(${mediaExt})...`);
         await writeFileSync(path.join(__dirname, 'static', `${videoUUID}.${mediaExt}`), videoResult);
-
+        console.log(lcl.green("[Fetch - Success]"), `Media saved(${videoUUID}.${mediaExt})`);
+        
         // return to client 
         return {
             success: true,
