@@ -28,6 +28,7 @@ async function downloadMedia(url, mediaExt) {
             success: true,
             UUID: videoUUID,
             path: path.join(__dirname, 'static', `${videoUUID}.${mediaExt}`),
+            pathFolder: path.join(__dirname, 'static'),
             format: mediaExt
         }
 

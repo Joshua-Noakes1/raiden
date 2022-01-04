@@ -7,6 +7,7 @@ async function webpToGIF(webpPath, gifPath) {
     try {
         await spawn('magick', [webpPath, gifPath]);
         return {
+            path: gifPath,
             success: true
         }
     } catch (err) {

@@ -1,4 +1,5 @@
 const lcl = require('cli-color'),
+    path = require('path'),
     webpToGIF = require('./videoLib/webpToGIF'),
     videoData = require('./videoLib/videoData'),
     videoYTDLP = require('../../../bin/ytdlp/bin/ytdlpExec'),
@@ -90,16 +91,15 @@ async function videoHandle(interaction, videoURL, callType, oldestFirst) {
 
         // webp wont play in discord so we need to download it and convert it to gif
         var videoDynamicThumb = await downloadMedia(videoData.images.imageDynamic, 'webp');
-        const videoDynamicWebP = await webpToGIF(videoDynamicThumb.path, videoDynamicThumb.pathFolder);
-
-        console.log(videoDynamicWebP);
-
-        process.exit(1);
-        
-        attachments.push({
+        var videoDynamicWebP = await webpToGIF(videoDynamicThumb.path, path.join(videoDynamicThumb.pathFolder, `${videoDynamicThumb.UUID}.gif`));
+        var dynamicThumb = {
             attachment: videoDynamicThumb.path,
             name: `${videoDynamicThumb.UUID}.${videoDynamicThumb.format}`
-        });
+        }
+        if (videoDynamicWebP.success) {
+            dynamicThumb.attachment = videoDynamicWebP.path;
+            dynamicThumb.name = `${videoDynamicThumb.UUID}.gif`;}
+        attachments.push(dynamicThumb);
 
         // downloads videos
         var videoWatermarked = await downloadMedia(videoData.videos.watermarked.watermarkedURL, videoData.videos.watermarked.watermarkedFormat);
@@ -202,6 +202,7 @@ async function videoHandle(interaction, videoURL, callType, oldestFirst) {
         // delete media files
         await unlinkSync(videoThumb.path);
         await unlinkSync(videoDynamicThumb.path);
+        await unlinkSync(videoDynamicWebP.path);
         await unlinkSync(videoWatermarked.path);
         await unlinkSync(videoRaw.path);
     });
