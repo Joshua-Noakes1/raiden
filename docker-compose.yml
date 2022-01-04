@@ -1,8 +1,9 @@
-version: '3.2'
+version: "3.2"
 services:
   accore:
-    image: accore
+    image: ghcr.io/joshua-noakes1/accore
     container_name: accore
     environment:
-      TOKEN: "<Token>"
-      REPO: "ytdl-patched/yt-dlp"
+      TOKEN: "<TOKEN>"
+      REPO: "yt-dlp/yt-dlp"
+      UPDATE: "true"

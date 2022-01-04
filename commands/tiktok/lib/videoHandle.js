@@ -163,15 +163,15 @@ async function videoHandle(interaction, videoURL, callType, oldestFirst) {
             }])
             .addFields([{
                 name: "Track Name",
-                value: `${videoData.audio.audioTrackname}`,
+                value: `${videoData.audio.audioTrackname != null ? videoData.audio.audioTrackname : 'Unknown'}`,
                 inline: true
             }, {
                 name: "Track Album",
-                value: `${videoData.audio.audioAlbum}`,
+                value: `${videoData.audio.audioAlbum != null ? videoData.audio.audioAlbum : 'Unknown'}`,
                 inline: true
             }, {
                 name: "Track Artist",
-                value: `${videoData.audio.audioArtist}`,
+                value: `${videoData.audio.audioArtist != null ? videoData.audio.audioArtist : 'Unknown'}`,
                 inline: true
             }])
             .setFooter(`Upload Date: ${videoData.meta.uploadDateTime.date}${videoData.meta.uploadDateTime.ordinal} ${videoData.meta.uploadDateTime.monthName} ${videoData.meta.uploadDateTime.year} ${videoData.meta.uploadDateTime.time.hour}:${videoData.meta.uploadDateTime.time.minutes}`)
