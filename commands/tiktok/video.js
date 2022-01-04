@@ -72,10 +72,6 @@ module.exports = {
                 value: "The video URL might look odd but it is correct and will send you to the video.",
                 inline: true
             }, {
-                name: "Dynamic Cover GIF",
-                value: "Discord has an issue with displaying the dynamic cover GIF, so it is not displayed.",
-                inline: true
-            }, {
                 name: "Stuck with just this embed?",
                 value: "Accore is downloading the video in the background, please wait...",
                 inline: true

@@ -91,14 +91,15 @@ async function videoHandle(interaction, videoURL, callType, oldestFirst) {
 
         // webp wont play in discord so we need to download it and convert it to gif
         var videoDynamicThumb = await downloadMedia(videoData.images.imageDynamic, 'webp');
-        var videoDynamicWebP = await webpToGIF(videoDynamicThumb.path, path.join(videoDynamicThumb.pathFolder, `${videoDynamicThumb.UUID}.gif`));
+        var videoDynamicWebP = await webpToGIF(videoDynamicThumb.path, videoDynamicThumb.UUID, path.join(videoDynamicThumb.pathFolder, `${videoDynamicThumb.UUID}.gif`));
         var dynamicThumb = {
             attachment: videoDynamicThumb.path,
             name: `${videoDynamicThumb.UUID}.${videoDynamicThumb.format}`
         }
         if (videoDynamicWebP.success) {
             dynamicThumb.attachment = videoDynamicWebP.path;
-            dynamicThumb.name = `${videoDynamicThumb.UUID}.gif`;}
+            dynamicThumb.name = `${videoDynamicThumb.UUID}.gif`;
+        }
         attachments.push(dynamicThumb);
 
         // downloads videos
@@ -179,7 +180,10 @@ async function videoHandle(interaction, videoURL, callType, oldestFirst) {
         // send embed
         try {
             console.log(lcl.blue("[TikTok - Info]"), `Uploading embed, This may take a while...`);
-            if (checkedAttachments.attachments.length < 4) await interaction.followUp(`**All videos were too large to upload so TikTok\'s watermarked video has been removed**${array.length > 1 ? ` (Video ${index + 1} of ${array.length})` : ''}`);
+            if (checkedAttachments.attachments.length < 4) await interaction.followUp({
+                content: `**All videos were too large to upload so TikTok\'s watermarked video has been removed**${array.length > 1 ? ` (Video ${index + 1} of ${array.length})` : ''}`,
+                ephemeral: true
+            });
             await interaction.followUp({
                 embeds: [videoEmbed],
                 files: checkedAttachments.attachments
