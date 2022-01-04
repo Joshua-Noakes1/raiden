@@ -47,7 +47,8 @@ docker run -d --name accore --restart=unless-stopped -e TOKEN=<TOKEN> -e REPO="y
 ```
 
 ### Shell
-1. Git clone ```https://github.com/Joshua-Noakes1/accore.git```
-2. Add your enviroment variables into a .env file
-3. Run `npm install`
-4. Run `npm run start`
+1. Install ImageMagick with support for WebP using your systems repo manager (APT for debian based system, Choco for Windows, Brew for mac)
+2. Git clone ```https://github.com/Joshua-Noakes1/accore.git```
+3. Add your enviroment variables into a .env file
+4. Run `npm install`
+5. Run `npm run start`
