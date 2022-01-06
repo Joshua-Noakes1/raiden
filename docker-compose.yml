@@ -5,5 +5,5 @@ services:
     container_name: accore
     environment:
       TOKEN: "<TOKEN>"
-      REPO: "yt-dlp/yt-dlp"
+      REPO: "ytdl-patched/yt-dlp" # ytdl-patched/yt-dlp is recomended as of now because ytdlp is not working
       UPDATE: "true"

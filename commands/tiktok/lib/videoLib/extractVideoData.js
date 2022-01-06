@@ -1,4 +1,5 @@
-const dateTime = require('../../../../bin/dateTime');
+const dateTime = require('../../../../bin/dateTime'),
+    getThumbnails = require('./videoDataLib/getThumbnails');
 
 async function extractVideoData(video) {
     return {
@@ -34,8 +35,8 @@ async function extractVideoData(video) {
             }
         },
         images: {
-            imageCover: video.thumbnails[7].url,
-            imageDynamic: video.thumbnails[0].url,
+            imageCover: await getThumbnails(video.thumbnails, 'static'),
+            imageDynamic: await getThumbnails(video.thumbnails, 'dynamic'),
         },
         audio: {
             audioTrackname: video.track,

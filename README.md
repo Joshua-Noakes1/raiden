@@ -36,19 +36,23 @@ services:
     restart: unless-stopped
     environment:
       TOKEN: "<TOKEN>"
-      REPO: "yt-dlp/yt-dlp"
+      REPO: "ytdl-patched/yt-dlp" # ytdl-patched/yt-dlp is recomended as of now because ytdlp is not working
       UPDATE: "true"
 ```
 
 ### Docker
 
+#### ytdl-patched/yt-dlp is recomended as of now because ytdlp is not working
+
 ```shell
-docker run -d --name accore --restart=unless-stopped -e TOKEN=<TOKEN> -e REPO="yt-dlp/yt-dlp" -e UPDATE="true" ghcr.io/joshua-noakes1/accore
+docker run -d --name accore --restart=unless-stopped -e TOKEN=<TOKEN> -e REPO="ytdl-patched/yt-dlp" -e UPDATE="true" ghcr.io/joshua-noakes1/accore
 ```
 
 ### Shell
+
 1. Install ImageMagick with support for WebP using your systems repo manager (APT for debian based system, Choco for Windows, Brew for mac)
-2. Git clone ```https://github.com/Joshua-Noakes1/accore.git```
-3. Add your enviroment variables into a .env file
+2. Git clone `https://github.com/Joshua-Noakes1/accore.git`
+3. Add your enviroment variables into a .env file  
+   3a. Add `ytdl-patched/yt-dlp` as the REPO env, as of now yt-dlp is not working
 4. Run `npm install`
 5. Run `npm run start`
