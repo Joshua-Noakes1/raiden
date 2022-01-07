@@ -12,7 +12,7 @@ module.exports = {
     description: 'Replies with all videos from a user on TikTok',
 
     slash: true,
-    testOnly: true, // Only register a slash command for the testing guilds
+    testOnly: false, // Only register a slash command for the testing guilds
 
     options: [{
         name: 'url',
