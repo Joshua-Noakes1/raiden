@@ -1,5 +1,5 @@
 const path = require('path'),
-    lcl = require('lcl'),
+    lcl = require('cli-color'),
     {MessageEmbed} = require('discord.js'),
     {
         readJSON,
