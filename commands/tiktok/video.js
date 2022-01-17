@@ -30,8 +30,8 @@ module.exports = {
         });
 
         // Parse URL
-        var videoURL = await interaction.options.getString('url');
-        const parsedVideoURL = new urlParse(videoURL);
+        const DiscordUserURL = await interaction.options.getString('url');
+        const parsedVideoURL = new urlParse(DiscordUserURL);
 
         // Check if URL is valid
         if (parsedVideoURL.hostname.match(/^(?:https?:\/\/)?(?:vm\.)?(?:www\.)?tiktok\.com/gm) == null) { // vm.tiktok.com - Mobile Share URL, www.tiktok.com - Desktop Share URL
@@ -49,7 +49,8 @@ module.exports = {
         }
 
         // apply URL fix
-        videoURL = `${parsedVideoURL.protocol}//${parsedVideoURL.hostname}${parsedVideoURL.pathname}`;
+        var videoURL = `${parsedVideoURL.protocol}//${parsedVideoURL.hostname}${parsedVideoURL.pathname}`;
+        videoURL = videoURL.replace(/(\r\n|\n|\r)/gm, "").trim();
 
         // check for ytdlp updates
         const ytdlpUpdate = await updateYTDLP();
