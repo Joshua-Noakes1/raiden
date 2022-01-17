@@ -23,7 +23,6 @@
     "discord.js": "^13.6.0",
     "dotenv": "^11.0.0",
     "file-type": "^17.1.1",
-    "node-fetch": "^2.6.6",
     "path": "^0.12.7",
     "url-parse": "^1.5.4",
     "uuid": "^8.3.2",
