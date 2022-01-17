@@ -30,7 +30,7 @@ module.exports = {
         });
 
         // Parse URL
-        const videoURL = await interaction.options.getString('url');
+        var videoURL = await interaction.options.getString('url');
         const parsedVideoURL = new urlParse(videoURL);
 
         // Check if URL is valid
@@ -47,6 +47,9 @@ module.exports = {
             });
             return;
         }
+
+        // apply URL fix
+        videoURL = `${parsedVideoURL.protocol}//${parsedVideoURL.hostname}${parsedVideoURL.pathname}`;
 
         // check for ytdlp updates
         const ytdlpUpdate = await updateYTDLP();

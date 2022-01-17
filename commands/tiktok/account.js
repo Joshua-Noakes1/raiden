@@ -53,6 +53,9 @@ module.exports = {
             return;
         }
 
+        // apply URL fix
+        videoURL = `${parsedVideoURL.protocol}//${parsedVideoURL.hostname}${parsedVideoURL.pathname}`;
+
         // check for ytdlp updates
         const ytdlpUpdate = await updateYTDLP();
         if (ytdlpUpdate.success == false) {
