@@ -42,8 +42,6 @@ services:
 
 ### Docker
 
-#### ytdl-patched/yt-dlp is recomended as of now because ytdlp is not working
-
 ```shell
 docker run -d --name accore --restart=unless-stopped -e TOKEN=<TOKEN> -e REPO="yt-dlp/yt-dlp" -e UPDATE="true" ghcr.io/joshua-noakes1/accore
 ```
