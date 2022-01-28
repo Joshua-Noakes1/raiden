@@ -1,7 +1,7 @@
 const lcl = require('cli-color'),
     urlParse = require('url-parse'),
     updateYTDLP = require('../../bin/ytdlp/download/ytdlpCore'),
-    videoHandle = require('./lib/videoHandle'),
+    videoHandle = require('../../lib/tiktok/lib/videoHandle'),
     {
         MessageEmbed,
         Constants
