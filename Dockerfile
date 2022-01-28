@@ -3,9 +3,9 @@ FROM node:slim
 WORKDIR /app
 
 # Update apt packages and install python
-RUN apt-get install -y -qq update 
-RUN apt-get install -y -qq upgrade
-RUN apt-get install -y -qq python imagemagick
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y update 
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y upgrade
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y python imagemagick
 
 # Copy Files
 COPY . .
