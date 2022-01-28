@@ -3,7 +3,7 @@ FROM node:slim
 WORKDIR /app
 
 # Update apt packages and install python
-RUN apt-get update -y && apt-get upgrade -y && apt-get install -y software-properties-common && apt-get install -y python imagemagick
+RUN apt-get update -y && apt-get upgrade -y && apt-get install -y python imagemagick
 
 # Copy Files
 COPY . .
