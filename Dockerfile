@@ -5,7 +5,7 @@ WORKDIR /app
 # Update apt packages and install python
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y -qq update
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y -qq upgrade
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -qq python3 imagemagick
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -qq python python3 imagemagick
 
 # Copy Files
 COPY . .
