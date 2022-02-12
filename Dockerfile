@@ -7,8 +7,8 @@ WORKDIR /app
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y -qq update
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y -qq upgrade
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y -qq install python
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y -qq install python3
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -qq imagemagick
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y -qq install python3 webp
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -qq imagemagick 
 
 # Copy Files
 COPY . .
