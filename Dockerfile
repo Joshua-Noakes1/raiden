@@ -1,5 +1,6 @@
 # From node slim image
-FROM node:slim
+# https://stackoverflow.com/a/71073989
+FROM node:16.14.0-stretch-slim 
 WORKDIR /app
 
 # Update apt packages and install python
