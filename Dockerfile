@@ -1,22 +1,18 @@
 # From node slim image
 # https://stackoverflow.com/a/71073989
-FROM node:16.14.0-stretch-slim 
+FROM nikolaik/python-nodejs:python3.10-nodejs16-slim
 WORKDIR /app
 
-# Update apt packages and install python
+# Install dependencies
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y -qq update
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y -qq upgrade
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -qq python imagemagick
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -qq imagemagick
 
 # Copy Files
 COPY . .
 
 # Install dependencies
 RUN npm install
-
-# Fix for ytdlp running
-RUN DEBIAN_FRONTEND=noninteractive apt-get remove -y -qq python
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -qq python3
 
 # Expose app
 CMD ["npm", "start"]
