@@ -81,6 +81,7 @@ ytdlp-exec.exe
 version.json
 
 # Old Files
+*dev*
 *old*
 *mock*
 *._*
