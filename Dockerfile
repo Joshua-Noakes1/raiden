@@ -1,6 +1,6 @@
 # From node slim image
 # https://stackoverflow.com/a/71073989
-FROM node:16.14.0-buster-slim
+FROM node:16.14.0-slim
 WORKDIR /app
 
 # Install dependencies

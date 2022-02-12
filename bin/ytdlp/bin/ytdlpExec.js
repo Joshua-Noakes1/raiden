@@ -24,7 +24,8 @@ async function execDownload(url) {
         // get video info
         var videoResult = await ytdlp(videoURL, {
             dumpSingleJson: true,
-            verbose: true
+            verbose: true,
+            "no-check-certificate": true
         });
         return {
             success: true,
