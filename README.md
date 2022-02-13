@@ -12,8 +12,8 @@ https://user-images.githubusercontent.com/53623449/147841172-4e9eedd1-6682-4ad4-
 accore uses Discord's slash command system to let the download TikTok videos.
 | Command | Descripton | Usage |
 |--------------|-----------|------------|
-| /video | Gets a single video from TikTok | /video url:https://vm.tiktok.com/ZM8K5XLfV # url:To TikTok video |
-| /account | Gets all videos from an account on TikTok | /account url:https://tiktok.com/@jokeryoda oldest:True # url:To TikTok account oldest:True to download oldest videos first |
+| /ttvideo | Gets a single video from TikTok | /video url:https://vm.tiktok.com/ZM8K5XLfV # url:To TikTok video |
+| /ttaccount | Gets all videos from an account on TikTok | /account url:https://tiktok.com/@jokeryoda oldest:True # url:To TikTok account oldest:True to download oldest videos first |
 
 ## Install
 
