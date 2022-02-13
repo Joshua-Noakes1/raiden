@@ -1,25 +1,11 @@
 const lcl = require('cli-color'),
-    fetch = require('node-fetch'),
     path = require('path'),
     {
         create: createYoutubeDl
     } = require('youtube-dl-exec'),
     ytdlp = createYoutubeDl(path.join(__dirname, process.platform == 'win32' ? 'ytdlp-exec.exe' : 'ytdlp-exec'));
 
-async function execDownload(url) {
-    /* fix for vm.tiktok.com timeout - Could not send HEAD request to https://vm.tiktok.com/ZMLje4Gem/:
-        This should be temporary, until i get time to put a proper fix in place
-    */
-    if (url.includes('vm')) {
-        var videoURL = await fetch(url, {
-            method: 'HEAD',
-            redirect: 'manual'
-        });
-        videoURL = await videoURL.headers.get('Location');
-    } else {
-        var videoURL = url;
-    }
-
+async function execDownload(videoURL) {
     try {
         // get video info
         var videoResult = await ytdlp(videoURL, {
