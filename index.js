@@ -9,7 +9,8 @@ const {
 
 // new intents needed for client
 const client = new Client({
-    intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS]
+    intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS],
+    restRequestTimeout: 30000, // 30 seconds, could even put this to 1 minute
 });
 
 client.on('ready', async (client) => {
