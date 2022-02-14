@@ -27,6 +27,6 @@
     "url-parse": "^1.5.4",
     "uuid": "^8.3.2",
     "wokcommands": "^1.5.3",
-    "youtube-dl-exec": "^2.0.3"
+    "youtube-dl-exec": "^2.0.4"
   }
 }
