@@ -31,7 +31,7 @@ Ayanami uses Discord's slash command system to download TikTok videos.
 version: "3.2"
 services:
   Ayanami:
-    image: ghcr.io/joshua-noakes1/Ayanami
+    image: ghcr.io/joshua-noakes1/ayanami
     container_name: Ayanami
     restart: unless-stopped
     environment:
@@ -43,7 +43,7 @@ services:
 ### Docker
 
 ```shell
-docker run -d --name Ayanami --restart=unless-stopped -e TOKEN=<TOKEN> -e REPO="yt-dlp/yt-dlp" -e UPDATE="true" ghcr.io/joshua-noakes1/Ayanami
+docker run -d --name Ayanami --restart=unless-stopped -e TOKEN=<TOKEN> -e REPO="yt-dlp/yt-dlp" -e UPDATE="true" ghcr.io/joshua-noakes1/ayanami
 ```
 
 ### Shell
