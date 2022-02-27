@@ -45,7 +45,8 @@ jobs:
         with:
           context: .
           file: ./Dockerfile
-          platforms: linux/amd64,linux/arm64,linux/arm/v7
+          #platforms: linux/amd64,linux/arm64,linux/arm/v7
+          platforms: linux/amd64
           push: true
           tags: ${{ env.REGISTRY_GHCR }}/${{ steps.meta.outputs.tags }}
           cache-from: type=registry,ref=user/app:latest

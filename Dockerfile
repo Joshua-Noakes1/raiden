@@ -3,7 +3,7 @@
 FROM python:slim-buster
 WORKDIR /app
 
-# Install dependencies based on https://github.com/nikolaik/docker-python-nodejs
+# Install NodeJS v16.x
 RUN \
     apt-get update && \
     apt-get install -yqq gnupg wget curl && \
@@ -12,11 +12,14 @@ RUN \
     apt-get update && \
     apt-get install -yqq nodejs && \
     npm i -g npm@^8 && \
-    t=$(mktemp) && \
-    wget 'https://dist.1-2.dev/imei.sh' -qO "$t" && \
-    bash "$t" && \
-    rm "$t" && \
     rm -rf /var/lib/apt/lists/*
+
+# Install ImageMagick
+RUN \
+    wget https://dist.1-2.dev/imei.sh && \ 
+    cat imei.sh && \ 
+    chmod +x imei.sh && \
+    ./imei.sh --skip-jxl --skip-heif --skip-aom
 
 # Copy Files
 COPY . .
