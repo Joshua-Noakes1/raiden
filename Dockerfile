@@ -17,7 +17,6 @@ RUN \
 # Install ImageMagick
 RUN \
     wget https://dist.1-2.dev/imei.sh && \ 
-    cat imei.sh && \ 
     chmod +x imei.sh && \
     ./imei.sh --skip-jxl --skip-heif --skip-aom
 
