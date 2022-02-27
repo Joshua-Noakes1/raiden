@@ -13,7 +13,7 @@ async function execDownload(videoURL) {
             verbose: false,
             "no-check-certificate": true
         }
-        if (process.env.dev == "true") ytdlpOptions.verbose = true;
+        if (process.env.DEV == "true") ytdlpOptions.verbose = true;
 
         // get video info
         var videoResult = await ytdlp(videoURL, ytdlpOptions);
@@ -23,7 +23,7 @@ async function execDownload(videoURL) {
         };
     } catch (error) {
         console.log(lcl.red("[YTDLP Download - Error]"), "Failed to download video with YTDLP");
-        if (process.env.dev == "true") console.log(error);
+        if (process.env.DEV == "true") console.log(error);
         return {
             success: false
         };

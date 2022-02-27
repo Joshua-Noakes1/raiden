@@ -14,7 +14,11 @@ RUN \
     pip install -U pip && pip install pipenv && \
     npm i -g npm@^8 && \
     curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py | python - && \
-    apt-get -yqq install webp imagemagick && \ 
+    apt-get -yqq install fuse && \
+    t=$(mktemp) && \
+    wget 'https://dist.1-2.dev/imei.sh' -qO "$t" && \
+    bash "$t" && \
+    rm "$t" && \
     rm -rf /var/lib/apt/lists/*
 
 # Copy Files
