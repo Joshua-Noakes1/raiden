@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
-    "dev": "nodemon -i \"*.json\" index.js"
+    "dev": "nodemon -i \"*.json\" index.js",
+    "build-dev": "docker build --pull --rm -f Dockerfile -t ayanami:latest .",
+    "docker-dev": "docker-compose up -d --force-recreate"
   },
   "repository": {
     "type": "git",
