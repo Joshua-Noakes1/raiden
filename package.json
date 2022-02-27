@@ -1,6 +1,6 @@
 {
-  "name": "accore",
-  "version": "1.5.2",
+  "name": "ayanami",
+  "version": "1.6.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Joshua-Noakes1/accore.git"
+    "url": "git+https://github.com/Joshua-Noakes1/ayanami.git"
   },
   "author": "Joshua-Noakes1",
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/Joshua-Noakes1/accore/issues"
+    "url": "https://github.com/Joshua-Noakes1/ayanami/issues"
   },
-  "homepage": "https://github.com/Joshua-Noakes1/accore#readme",
+  "homepage": "https://github.com/Joshua-Noakes1/ayanami#readme",
   "dependencies": {
     "cli-color": "^2.0.1",
     "discord.js": "^13.6.0",

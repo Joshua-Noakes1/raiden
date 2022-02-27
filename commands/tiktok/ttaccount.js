@@ -82,7 +82,7 @@ module.exports = {
                 inline: true
             }, {
                 name: "Stuck with just this embed?",
-                value: "Accore is downloading the video in the background, please wait...",
+                value: "Ayanami is downloading the video in the background, please wait...",
                 inline: true
             }])
             .setColor("#00ff00")

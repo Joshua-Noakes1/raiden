@@ -6,7 +6,7 @@
         {
             "label": "Build Image and Run",
             "type": "shell",
-            "command": "docker build --pull --rm -f \"Dockerfile\" -t accore:latest \".\" && docker-compose -f \"docker-compose.yml\" up -d"
+            "command": "docker build --pull --rm -f \"Dockerfile\" -t ayanami:latest \".\" && docker-compose -f \"docker-compose.yml\" up -d"
         }
     ]
 }

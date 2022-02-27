@@ -33,7 +33,8 @@ async function downloadMedia(url, mediaExt) {
         }
 
     } catch (error) {
-        console.log(lcl.red("[Fetch - Error]"), "Failed to download media", error);
+        console.log(lcl.red("[Fetch - Error]"), "Failed to download media");
+        if (process.env.dev == "true") console.log(error);
         return {
             success: false,
             message: "Failed to download media"

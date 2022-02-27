@@ -1,8 +1,8 @@
 version: "3.2"
 services:
-  accore:
-    image: ghcr.io/joshua-noakes1/accore
-    container_name: accore
+  ayanami:
+    image: ghcr.io/joshua-noakes1/ayanami
+    container_name: ayanami
     environment:
       TOKEN: "<TOKEN>"
       REPO: "yt-dlp/yt-dlp"
