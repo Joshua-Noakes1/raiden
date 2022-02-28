@@ -9,14 +9,14 @@ const lcl = require('cli-color'),
 
 module.exports = {
     category: 'Media',
-    description: 'Replies with an individual video from TikTok',
+    description: 'Replies with an individual video or account from TikTok',
 
     slash: true,
     testOnly: false, // Only register a slash command for the testing guilds
 
     options: [{
         name: 'url',
-        description: 'Single video from TikTok eg: vm.tiktok.com/ZM8K5XLfV', // example 
+        description: 'Video or account URL from TikTok eg: vm.tiktok.com/ZM8K5XLfV', // example 
         required: true,
         type: Constants.ApplicationCommandOptionTypes.STRING
     }],

@@ -13,13 +13,12 @@ Ayanami uses Discord's slash command system to download TikTok videos.
 | Command | Description | Usage |
 |--------------|-----------|------------|
 | /ttvideo | Gets a single video from TikTok | /video url:https://vm.tiktok.com/ZM8K5XLfV # url:To TikTok video |
-| /ttaccount | Gets all videos from an account on TikTok | /account url:https://tiktok.com/@jokeryoda oldest:True # url:To TikTok account oldest:True to download oldest videos first |
 
 ## Install
 
 ### Environment Variables
 
-| Variable | Description                              | Default       | Optional |
+| Variable | Description                             | Default       | Optional |
 | -------- | --------------------------------------- | ------------- | -------- |
 | TOKEN    | Your Discord bot token                  | <TOKEN>       | ❌       |
 | REPO     | The GitHub repo to download YT-DLP from | yt-dlp/yt-dlp | ✔        |
