@@ -1,0 +1,36 @@
+{
+  "name": "ayanami",
+  "version": "8.0.0",
+  "description": "Open-source Discord TikTok video download bot",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon -i \"*.json\" index.js",
+    "build": "docker build --pull --rm -f Dockerfile -t ayanami:latest .",
+    "docker-dev": "docker-compose up -d --force-recreate -f 'docker-compose.dev.yml'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Joshua-Noakes1/ayanami.git"
+  },
+  "keywords": [],
+  "author": "Joshua-Noakes1",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/Joshua-Noakes1/ayanami/issues"
+  },
+  "homepage": "https://github.com/Joshua-Noakes1/ayanami#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "cli-color": "^2.0.1",
+    "discord.js": "^13.6.0",
+    "dotenv": "^16.0.0",
+    "path": "^0.12.7",
+    "url-parse": "^1.5.10",
+    "uuid": "^8.3.2",
+    "wokcommands": "^1.5.3",
+    "youtube-dl-exec": "^2.0.6"
+  }
+}
