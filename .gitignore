@@ -81,7 +81,6 @@ ytdlp-exec.exe
 version.json
 
 # Old Files
-.vscode/*.dict
 *dev*
 *old*
 *mp4*
