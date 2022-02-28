@@ -1,4 +1,3 @@
-# From node slim image
 # https://stackoverflow.com/a/71073989
 FROM python:alpine3.15
 WORKDIR /app
