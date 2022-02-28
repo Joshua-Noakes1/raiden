@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon -i \"*.json\" index.js",
+    "dev": "nodemon -i \"*.json\" index.js --trace-warnings",
     "build": "docker build --pull --rm -f Dockerfile -t ayanami:latest .",
     "docker-dev": "docker-compose up -d --force-recreate -f 'docker-compose.dev.yml'"
   },
@@ -27,6 +27,7 @@
     "cli-color": "^2.0.1",
     "discord.js": "^13.6.0",
     "dotenv": "^16.0.0",
+    "node-fetch": "^2.6.7",
     "path": "^0.12.7",
     "url-parse": "^1.5.10",
     "uuid": "^8.3.2",
