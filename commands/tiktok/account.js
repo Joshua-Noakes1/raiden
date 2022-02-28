@@ -19,11 +19,6 @@ module.exports = {
         description: 'Single link to a TikTok account eg: vm.tiktok.com/ZM8K5XLfV', // example 
         required: true,
         type: Constants.ApplicationCommandOptionTypes.STRING
-    }, {
-        name: 'oldest',
-        description: 'If true will return the oldest videos first',
-        required: false,
-        type: Constants.ApplicationCommandOptionTypes.BOOLEAN
     }],
 
     callback: async ({
@@ -95,7 +90,7 @@ module.exports = {
 
 
         // start video handle
-        await videoHandle(interaction, videoURL, 'account', interaction.options.getBoolean('oldest'));
+        await videoHandle(interaction, videoURL, 'account');
         return;
     },
 }
