@@ -26,7 +26,7 @@ async function fetchDownload(URL, platform) {
         };
     } catch (error) {
         console.log(lcl.red("[Fetch - Error]"), "Failed to download YTDLP");
-        if (process.env.DEV == "true") console.log(error);
+        console.log(error);
         return {
             success: false
         }

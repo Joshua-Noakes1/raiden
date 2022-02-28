@@ -67,7 +67,7 @@ async function getDownloadURL() {
 
     } catch (error) {
         console.log(lcl.red("[Github API - Error]"), "Failed to download YTDLP from Github");
-        if (process.env.DEV == "true") console.log(error);
+        console.log(error);
         return {
             success: false
         }

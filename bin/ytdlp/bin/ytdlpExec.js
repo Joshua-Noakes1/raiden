@@ -7,23 +7,19 @@ const lcl = require('cli-color'),
 
 async function execDownload(videoURL) {
     try {
-        // set options for ytdlp
-        let ytdlpOptions = {
-            dumpSingleJson: true,
-            verbose: false,
-            "no-check-certificate": true
-        }
-        if (process.env.DEV == "true") ytdlpOptions.verbose = true;
-
         // get video info
-        var videoResult = await ytdlp(videoURL, ytdlpOptions);
+        var videoResult = await ytdlp(videoURL, {
+            dumpSingleJson: true,
+            verbose: true,
+            "no-check-certificate": true
+        });
         return {
             success: true,
             videoResult
         };
     } catch (error) {
         console.log(lcl.red("[YTDLP Download - Error]"), "Failed to download video with YTDLP");
-        if (process.env.DEV == "true") console.log(error);
+        console.log(error);
         return {
             success: false
         };
