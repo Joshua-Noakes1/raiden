@@ -33,7 +33,15 @@ client.on('ready', async (client) => {
         ignoreBots: false,
         testServers: ['909103932406640660', '793215810805825577'],
         botOwners: ['412876072540045312'],
-    });
+        disabledDefaultCommands: [
+            'help',
+            'command',
+            'language',
+            'prefix',
+            'requiredrole',
+            'channelonly'
+        ],
+    }).setDefaultPrefix('?');
 });
 
 // try and login (i dont actually know if this works or not)

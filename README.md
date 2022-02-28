@@ -22,7 +22,7 @@ Ayanami uses Discord's slash command system to download TikTok videos.
 | -------- | --------------------------------------- | ------------- | -------- |
 | TOKEN    | Your Discord bot token                  | <TOKEN>       | ❌       |
 | REPO     | The GitHub repo to download YT-DLP from | yt-dlp/yt-dlp | ✔        |
-| UPDATE   | Weather or not to update YT-DLP         | true          | ✔        |
+| UPDATE   | Whether or not to update YT-DLP         | true          | ✔        |
 
 ### Docker-Compose
 

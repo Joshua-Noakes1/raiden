@@ -1,7 +1,7 @@
 const lcl = require('cli-color'),
     urlParse = require('url-parse'),
-    updateYTDLP = require('../../bin/ytdlp/download/ytdlpCore'),
-    videoHandle = require('../../lib/tiktok/lib/videoHandle'),
+    updateYTDLP = require('../../lib/ytdlp/core'),
+    videoHandle = require('../../lib/tiktok/videoHandle'),
     {
         MessageEmbed,
         Constants
@@ -12,7 +12,7 @@ module.exports = {
     description: 'Replies with an individual video or account from TikTok',
 
     slash: true,
-    testOnly: false, // Only register a slash command for the testing guilds
+    testOnly: process.env.dev == "true" ? true : false, // Only register a slash command for the testing guilds
 
     options: [{
         name: 'url',
