@@ -81,7 +81,10 @@ ytdlp-exec.exe
 version.json
 
 # Old Files
+.vscode/*.dict
 *dev*
 *old*
-*._*
-bin/ytdlp/videos/static/
+*mp4*
+*png*
+*webp*
+*gif*
