@@ -1,5 +1,5 @@
 # Build docker buildx for AMD64, Arm64 and ArmV7
-name: CI
+name: CI-DEV
 
 # Only build on pushes to master and to ghcr:master
 on:
