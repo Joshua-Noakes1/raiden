@@ -81,7 +81,7 @@ ytdlp-exec.exe
 version.json
 
 # Old Files
-*dev
+*.dev*
 *old*
 *mp4*
 *png*
