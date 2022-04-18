@@ -5,7 +5,7 @@ name: CI-DEV
 on:
   push:
     branches:
-      - "dev"
+      - "trunk"
     paths-ignore:
       - '**/**.md'
 env:
@@ -31,7 +31,7 @@ jobs:
         uses: docker/metadata-action@f2a13332ac1ce8c0a71aeac48a150dbb1838ab67
         with:
           images: ${{ env.IMAGE_NAME }}
-          tags: type=raw,value=latest
+          tags: type=raw,value=dev
 
       - name: Login to GHCR
         uses: docker/login-action@v1
@@ -48,5 +48,5 @@ jobs:
           platforms: linux/amd64,linux/arm64,linux/arm/v7
           push: true
           tags: ${{ env.REGISTRY_GHCR }}/${{ steps.meta.outputs.tags }}
-          cache-from: type=registry,ref=user/app:dev
+          cache-from: type=registry,ref=user/app:latest
           cache-to: type=inline
