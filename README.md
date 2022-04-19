@@ -11,7 +11,7 @@ Ayanami is a Discord bot built to fetch all versions (watermarked and un-waterma
 
 ## Supported Architectures
 
-We use Github Actions to build a multi architecture docker image. The build information can be found [here](https://github.com/Joshua-Noakes1/ayanami/blob/trunk/.github/workflows/buildDockerContainer.yml).
+We use Github Actions to build a multi architecture docker image. The build information can be found [here](https://github.com/Joshua-Noakes1/ayanami/blob/trunk/.github/workflows/ci.yml).
 
 Pulling `ghcr.io/joshua-noakes1/ayanami` should return the correct image for your arch.
 
@@ -36,7 +36,7 @@ Ayanami uses Discord's new [slash command system](https://support.discord.com/hc
 
 | Command |                             Description                              |                      Usage                      |
 | :-----: | :------------------------------------------------------------------: | :---------------------------------------------: |
-| /video  | Downloads a single video or all the videos from an account on TikTok | /video url: \<https://vm.tiktok.com/ZM8K5XLfV\> |
+| /video  | Downloads a single video or all the videos from an account on TikTok | /video url: \<https://vm.tiktok.com/ZM8K5XLfV/> |
 
 ## Usage
 

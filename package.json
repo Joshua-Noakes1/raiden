@@ -1,14 +1,11 @@
 {
   "name": "ayanami",
-  "version": "1.8.0",
-  "description": "",
+  "version": "2.0.0",
+  "description": "Ayanami is a Discord bot built to fetch all versions of a TikTok video provided through a Discord bot.",
   "main": "index.js",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
-    "dev": "nodemon -i \"*.json\" index.js",
-    "build-dev": "docker build --pull --rm -f Dockerfile -t ayanami:latest .",
-    "docker-dev": "docker-compose up -d --force-recreate"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -20,15 +17,18 @@
     "url": "https://github.com/Joshua-Noakes1/ayanami/issues"
   },
   "homepage": "https://github.com/Joshua-Noakes1/ayanami#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
   "dependencies": {
-    "cli-color": "^2.0.1",
+    "cli-color": "^2.0.2",
     "discord.js": "^13.6.0",
     "dotenv": "^16.0.0",
-    "file-type": "^17.1.1",
+    "node-fetch": "^3.2.3",
     "path": "^0.12.7",
-    "url-parse": "^1.5.9",
+    "url-parse": "^1.5.10",
     "uuid": "^8.3.2",
     "wokcommands": "^1.5.3",
-    "youtube-dl-exec": "^2.0.5"
+    "youtube-dl-exec": "^2.0.11"
   }
 }
