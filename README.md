@@ -70,9 +70,9 @@ docker run -d \
 
 ## Environment Variables
 
-|     EV      |                                                            Description                                                             |    Default    | Optional |
-| :---------: | :--------------------------------------------------------------------------------------------------------------------------------: | :-----------: | :------: |
-| DCORD_TOKEN |                                                       Your Discord bot token                                                       |               |    ❌    |
-|    LANG     | The language which embeds will be sent in (Language Support [Here](https://github.com/Joshua-Noakes1/ayanami/blob/trunk/LANGS.md)) |      EN       |    ✔     |
-|  YTDL_REPO  |                                        The GitHub repo where Youtube-DL is downloaded from                                         | yt-dlp/yt-dlp |    ✔     |
-| YTDL_UPDATE |                                        Whether to update Youtube-DL or not (not-recomended)                                        |     true      |    ✔     |
+|     EV      |                     Description                      |    Default    | Optional |
+| :---------: | :--------------------------------------------------: | :-----------: | :------: |
+| DCORD_TOKEN |                Your Discord bot token                |               |    ❌    |
+|    LANG     |      The language which embeds will be sent in.      |      EN       |    ✔     |
+|  YTDL_REPO  | The GitHub repo where Youtube-DL is downloaded from  | yt-dlp/yt-dlp |    ✔     |
+| YTDL_UPDATE | Whether to update Youtube-DL or not (not-recomended) |     true      |    ✔     |

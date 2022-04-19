@@ -1,13 +1,13 @@
 # Build docker buildx for AMD64, Arm64 and ArmV7
 name: CI
 
-# Only build on pushes to master and to ghcr:master
+# Only build on pushes to trunk
 on:
   push:
     branches:
       - "trunk"
     paths-ignore:
-      - '**/**.md'
+      - "**/**.md"
 env:
   REGISTRY_GHCR: ghcr.io
   IMAGE_NAME: ${{ github.repository }}

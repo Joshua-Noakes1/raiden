@@ -1,7 +1,7 @@
 # Build docker buildx for AMD64, Arm64 and ArmV7
 name: CI-DEV
 
-# Only build on pushes to master and to ghcr:master
+# Only build on pushes to trunk
 on:
   push:
     branches:
