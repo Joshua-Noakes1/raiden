@@ -44,4 +44,4 @@ client.on('ready', async (client) => {
     }).setDefaultPrefix('?');
 });
 
-client.login(process.env.TOKEN);
+client.login(process.env.DCORD_TOKEN);
