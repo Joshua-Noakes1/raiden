@@ -20,7 +20,7 @@ client.on('ready', async (client) => {
     // set bot status
     client.user.setPresence({
         status: "dnd",
-        activities: [{  
+        activities: [{
             name: "TikTok",
             type: "WATCHING"
         }]
@@ -44,11 +44,4 @@ client.on('ready', async (client) => {
     }).setDefaultPrefix('?');
 });
 
-// try and login (i dont actually know if this works or not)
-try {
-    client.login(process.env.TOKEN);
-} catch (error) {
-    console.log(lcl.red("[Discord - Error]"), "Error while trying to login to Discord:");
-    console.log(error);
-    process.exit(1);
-}
+client.login(process.env.TOKEN);
