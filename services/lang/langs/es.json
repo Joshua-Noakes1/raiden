@@ -1,0 +1,17 @@
+{
+    "success": true,
+    "# Generic Console Log": "--COMMENT--",
+    "CONSOLE_TIKTOK_WARN": "[TikTok - Advertencia]",
+    "CONSOLE_TIKTOK_ERROR": "[TikTok - Error]",
+    "# Console Log Error": "--COMENTARIO--",
+    "CONSOLE_TIKTOK_ERROR_INVALID_URL": "URL de vídeo incorrecta",
+    "# Embeds": "--COMMENT--",
+    "## ttinvalidURL": "--COMMENT--",
+    "EMBED_TIKTOK_INVALID_URL_TITLE": "URL de vídeo incorrecta",
+    "EMBED_TIKTOK_INVALID_URL_DESCRIPTION": "La URL que has proporcionado es incorrecta, por favor, inténtalo de nuevo...",
+    "# Video command": "--COMMENT--",
+    "VIDEO_CATEGORY": "TikTok",
+    "VIDEO_DESCRIPTION": "Descarga un vídeo o todos los vídeos de una cuenta de TikTok",
+    "VIDEO_URL_NAME": "url",
+    "VIDEO_URL_DESCRIPTION": "URL de un vídeo o una cuenta de TikTok"
+}
