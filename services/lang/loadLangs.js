@@ -4,9 +4,7 @@ const lcl = require('cli-color'),
 
 function loadLangs(filename) {
     // dev logging
-    if (process.env.DEV_MODE == "true") {
-        console.log(lcl.yellow("[Lang - Info]"), `Loading Languages for "${filename || "Unknown"}"...`);
-    }
+    if (process.env.DEV_MODE == "true") console.log(lcl.yellow("[Lang - Info]"), `Loading Languages for "${filename || "Unknown"}"...`);
 
     // load languages and return 
     try {
@@ -20,6 +18,7 @@ function loadLangs(filename) {
         return process.exit(1);
     }
 
+    if (process.env.DEV_MODE == "true") console.log(lcl.green("[Lang - Info]"), `Loaded Languages for "${filename || "Unknown"}"`);
     return lang;
 }
 
