@@ -1,5 +1,8 @@
 {
     "success": true,
-    "VIDEO_category": "TikTok",
-    "VIDEO_description": "Downloads a single video or all the videos from an account on TikTok"
+    "# Video command": "--COMMENT--",
+    "VIDEO_CATEGORY": "TikTok",
+    "VIDEO_DESCRIPTION": "Downloads a single video or all the videos from an account on TikTok",
+    "VIDEO_URL_NAME": "url",
+    "VIDEO_URL_DESCRIPTION": "The URL from a TikTok Video or Account"
 }
