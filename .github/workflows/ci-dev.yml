@@ -5,7 +5,7 @@ name: CI-DEV
 on:
   push:
     branches:
-      - "dev"
+      - "dev-disabled"
     paths-ignore:
       - '**/**.md'
 env:
