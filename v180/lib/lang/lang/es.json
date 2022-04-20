@@ -1,0 +1,6 @@
+{
+    "FILE_COMMANDS_TIKTOK_VIDEO": {
+        "category": "Media",
+        "description": "Devuelve un vídeo en particular o toda la cuenta de TikTok"
+    }
+}
