@@ -1,0 +1,11 @@
+{
+    "data": {
+        "regexes": {
+            "hello": { "pattern": "hello", "flags": "i" }
+        },
+        "ping": {
+            "test": "colour"
+        }
+    },
+    "refs": {}
+}

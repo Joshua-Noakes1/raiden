@@ -81,7 +81,7 @@ client.on('interactionCreate', async interaction => {
         try {
             console.log(lcl.blue("[Discord - Info]"), `"${lcl.yellow(interaction.user.tag)}" used the "${lcl.yellow(interaction.commandName)}" (/) command in "${lcl.yellow(interaction.guild.name)}".`);
             await command.execute(interaction);
-        } catch (error) {
+        } catch (err) {
             console.log(lcl.red("[Discord - Error]"), `Failed to execute command: "${interaction.commandName}"`);
             console.error(err);
             await interaction.reply({
