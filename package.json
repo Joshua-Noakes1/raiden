@@ -1,0 +1,26 @@
+{
+  "name": "raiden",
+  "version": "4.0.0",
+  "description": "Raiden is a Discord bot built to fetch all versions (watermarked and un-watermarked) of a TikTok video.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Joshua-Noakes1/raiden.git"
+  },
+  "author": "Joshua-Noakes1",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/Joshua-Noakes1/raiden/issues"
+  },
+  "homepage": "https://github.com/Joshua-Noakes1/raiden#readme",
+  "dependencies": {
+    "@discordjs/rest": "^1.3.0",
+    "cli-color": "^2.0.3",
+    "discord.js": "^14.6.0",
+    "dotenv": "^16.0.3",
+    "path": "^0.12.7"
+  }
+}
