@@ -46,11 +46,11 @@ function mapLang(langString) {
             currentLang.nativeLang = "English (US / UK)";
             currentLang.code = "en";
             break;
-            case "es-ES":
-                currentLang.lang = "spanish";
-                currentLang.nativeLang = "español";
-                currentLang.code = "es";
-                break;
+            // case "es-ES":
+            //     currentLang.lang = "spanish";
+            //     currentLang.nativeLang = "español";
+            //     currentLang.code = "es";
+            //     break;
             // case "fr":
             //     currentLang.lang = "french";
             //     currentLang.nativeLang = "français";
