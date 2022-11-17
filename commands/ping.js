@@ -1,12 +1,12 @@
+const colorHex = require('../lib/color');
 const {
     SlashCommandBuilder,
     EmbedBuilder
 } = require('discord.js');
 const {
-    Linguini, TypeMappers
-} = require('linguini');
-const path = require('path');
-let lang = new Linguini(path.join(__dirname, '..', 'langs'), 'lang');
+    mapLang,
+    getLangMatch
+} = require('../langs/getLangs');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -20,29 +20,32 @@ module.exports = {
         }),
 
     async execute(interaction) {
-        // random array of hex pastels
-        var colors = ["#FFB7B2", "#FFDAC1", "#E2F0CB", "#B5EAD7", "#C7CEEA"];
-        var color = colors[Math.floor(Math.random() * colors.length)];
+        // get language and color
+        var lang = mapLang(interaction.locale);
+        var color = colorHex();
 
-        console.log(lang.get('ping.test', interaction.locale, TypeMappers.String)); // Test string
-
-        // build embed
-        const embed = new EmbedBuilder()
-            .setTitle('Pong! 🏓')
+        // build embed - b1221fb2-4a78-497a-8db5-8956d3f3b8b9
+        const pingEmbed = new EmbedBuilder()
+            .setTitle(getLangMatch("pingEmbed.title", lang.code))
             .addFields({
-                name: "Discord API Latency",
+                name: getLangMatch("pingEmbed.discordAPILatency", lang.code),
                 value: `${interaction.client.ws.ping}ms`,
                 inline: true
             }, {
-                name: "Message Latency",
+                name: getLangMatch("pingEmbed.messageLatency", lang.code),
                 value: `${Date.now() - interaction.createdTimestamp}ms`,
                 inline: true
+            }, {
+                name: getLangMatch("pingEmbed.currentLanguage", lang.code),
+                value: `${lang.nativeLang} (${lang.lang})`,
+                inline: true
             })
+            .setThumbnail(interaction.client.user.avatarURL())
             .setColor(color)
             .setTimestamp();
 
         await interaction.reply({
-            embeds: [embed],
+            embeds: [pingEmbed],
             ephemeral: true
         });
     }

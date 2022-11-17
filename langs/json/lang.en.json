@@ -1,0 +1,13 @@
+{
+    "data": {
+        "pingEmbed": {
+            "info": "In commands/ping.js",
+            "uuid": "b1221fb2-4a78-497a-8db5-8956d3f3b8b9",
+            "title": "Pong! 🏓",
+            "discordAPILatency": "Discord API Latency",
+            "messageLatency": "Message Latency",
+            "currentLanguage": "Current Language"
+        }
+    },
+    "refs": {}
+}
