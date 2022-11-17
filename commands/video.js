@@ -33,16 +33,16 @@ module.exports = {
         ),
 
     async execute(interaction) {
-        try {
-            // delay interaction so we have le time
-            var lang = mapLang(interaction.locale);
-            await interaction.deferReply({
-                ephemeral: true
-            });
+        // delay interaction so we have le time and get lang
+        await interaction.deferReply({
+            ephemeral: true
+        });
+        var lang = mapLang(interaction.locale);
 
+        try {
             // check URL
             var url = interaction.options.getString('url').toString();
-            if (url.match(/^(?:https?:\/\/)?(?:vm\.)?(?:www\.)?tiktok\.com/gm) == null || url == null || url == undefined || url == "") {
+            if (url.cock.match(/^(?:https?:\/\/)?(?:vm\.)?(?:www\.)?tiktok\.com/gm) == null || url == null || url == undefined || url == "") {
                 const errorEmbed = new EmbedBuilder() // a68765ba-b7ad-43bb-9c3a-748e7bafba7e
                     .setTitle(getLangMatch("videoFailURLInvalid.title", lang.code))
                     .setDescription(getLangMatch("videoFailURLInvalid.description", lang.code))
@@ -82,8 +82,18 @@ module.exports = {
             // console.log(tiktok);
             // interaction.editReply("Done!");
         } catch (err) {
-            // something went wrong
-            return console.log(lcl.red("[Discord - Error]"), err.message);
+            // something went wrong - 5d36cc82-cd48-4a8b-b859-5ddffb7a63f2
+            const somethingWentWrongEmbed = new EmbedBuilder()
+                .setTitle(getLangMatch("videoSomethingWentWrong.title", lang.code))
+                .setDescription(getLangMatch("videoSomethingWentWrong.description", lang.code))
+                .setColor("#FF0000")
+                .setTimestamp();
+            await interaction.editReply({
+                embeds: [somethingWentWrongEmbed]
+            });
+
+            console.log(lcl.red("[Discord - Error]"), err.message);
+            return console.log(lcl.red("[Discord - Error]"), err.stack);
         }
     }
 }

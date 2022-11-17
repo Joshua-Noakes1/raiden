@@ -22,6 +22,12 @@
             "URLInfoDesc": "le le le",
             "embedStuckTitle": "Embed Stuck?",
             "embedStuckDesc": "If the embed is stuck, try clicking the link below."
+        },
+        "videoSomethingWentWrong": {
+            "info": "In commands/video.js",
+            "uuid": "5d36cc82-cd48-4a8b-b859-5ddffb7a63f2",
+            "title": "Something Went Wrong",
+            "description": "An error occurred while trying to get the video info. Please try again later."
         }
     },
     "refs": {}
