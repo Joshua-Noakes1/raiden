@@ -22,7 +22,6 @@ module.exports = {
     async execute(interaction) {
         // get language and color
         var lang = mapLang(interaction.locale);
-        var color = colorHex();
 
         // build embed - b1221fb2-4a78-497a-8db5-8956d3f3b8b9
         const pingEmbed = new EmbedBuilder()
@@ -41,7 +40,7 @@ module.exports = {
                 inline: true
             })
             .setThumbnail(interaction.client.user.avatarURL())
-            .setColor(color)
+            .setColor(colorHex())
             .setTimestamp();
 
         await interaction.reply({
