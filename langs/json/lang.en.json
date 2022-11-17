@@ -7,6 +7,21 @@
             "discordAPILatency": "Discord API Latency",
             "messageLatency": "Message Latency",
             "currentLanguage": "Current Language"
+        },
+        "videoFailURLInvalid": {
+            "info": "In commands/video.js",
+            "uuid": "a68765ba-b7ad-43bb-9c3a-748e7bafba7e",
+            "title": "Video URL Error",
+            "description": "Please provide a valid TikTok URL."
+        },
+        "videoInitialEmbedP1": {
+            "info": "In commands/video.js",
+            "uuid": "327fe4d3-0986-435e-8d86-59785d86cde6",
+            "title": "Video Info",
+            "URLInfoTitle": "URL Info",
+            "URLInfoDesc": "le le le",
+            "embedStuckTitle": "Embed Stuck?",
+            "embedStuckDesc": "If the embed is stuck, try clicking the link below."
         }
     },
     "refs": {}
