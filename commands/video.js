@@ -1,5 +1,6 @@
 const lcl = require('cli-color');
 const colorHex = require('../lib/color');
+const getTikTok = require('../lib/fetchTikTok');
 const {
     SlashCommandBuilder,
     EmbedBuilder
@@ -74,20 +75,22 @@ module.exports = {
                 ephemeral: true
             });
 
-            // var tiktok = await youtubedl('https://www.youtube.com/watch?v=6xKWiCMKKJg', {
-            //     dumpSingleJson: true,
-            //     noCheckCertificates: true,
-            //     noWarnings: true,
-            //     preferFreeFormats: true,
-            //     addHeader: [
-            //       'referer:youtube.com',
-            //       'user-agent:googlebot'
-            //     ]
+            var tikTokVideo = await getTikTok(url);
+            if (!tikTokVideo.success) {
+                // tiktok ytdlp failure - ee128fe2-bc0e-41a8-95b7-4872e32265f1
+                const videoFailEmbed = new EmbedBuilder()
+                    .setTitle(getLangMatch("videoYTDLPFailure.title", lang.code))
+                    .setDescription(getLangMatch("videoYTDLPFailure.description", lang.code))
+                    .setColor("#ff6961")
+                    .setTimestamp();
+                await interaction.editReply({
+                    embeds: [videoFailEmbed]
+                });
+                return;
+            }
 
-            //   })
+            console.log(tikTokVideo);
 
-            // console.log(tiktok);
-            // interaction.editReply("Done!");
         } catch (err) {
             // something went wrong - 5d36cc82-cd48-4a8b-b859-5ddffb7a63f2
             const somethingWentWrongEmbed = new EmbedBuilder()

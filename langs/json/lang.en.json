@@ -28,6 +28,12 @@
             "uuid": "5d36cc82-cd48-4a8b-b859-5ddffb7a63f2",
             "title": "Something Went Wrong",
             "description": "An error occurred while trying to get the video info. Please try again later."
+        },
+        "videoYTDLPFailure": {
+            "info": "In commands/video.js",
+            "uuid": "ee128fe2-bc0e-41a8-95b7-4872e32265f1",
+            "title": "Video Error",
+            "description": "Failed to fetch video, it may be private or unavailable. Please try again later."
         }
     },
     "refs": {}
