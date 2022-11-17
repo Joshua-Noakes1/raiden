@@ -1,6 +1,5 @@
 const lcl = require('cli-color');
 const colorHex = require('../lib/color');
-var youtubedl = require('youtube-dl-exec');
 const {
     SlashCommandBuilder,
     EmbedBuilder
@@ -53,11 +52,6 @@ module.exports = {
                 });
                 return;
             }
-
-
-            // re-import ytdl so we check for updates
-            console.log(lcl.blue("[YTDL - Info]"), "Checking for updates...");
-            // youtubedl = require('youtube-dl-exec')
 
             // create initial embed - 327fe4d3-0986-435e-8d86-59785d86cde6
             const videoInitialEmbedP1 = new EmbedBuilder()
