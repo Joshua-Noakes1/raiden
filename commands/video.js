@@ -42,11 +42,11 @@ module.exports = {
         try {
             // check URL
             var url = interaction.options.getString('url').toString();
-            if (url.cock.match(/^(?:https?:\/\/)?(?:vm\.)?(?:www\.)?tiktok\.com/gm) == null || url == null || url == undefined || url == "") {
+            if (url.match(/^(?:https?:\/\/)?(?:vm\.)?(?:www\.)?tiktok\.com/gm) == null || url == null || url == undefined || url == "") {
                 const errorEmbed = new EmbedBuilder() // a68765ba-b7ad-43bb-9c3a-748e7bafba7e
                     .setTitle(getLangMatch("videoFailURLInvalid.title", lang.code))
                     .setDescription(getLangMatch("videoFailURLInvalid.description", lang.code))
-                    .setColor("#FF0000")
+                    .setColor("#ff6961")
                     .setTimestamp();
                 await interaction.editReply({
                     embeds: [errorEmbed]
@@ -57,11 +57,24 @@ module.exports = {
 
             // re-import ytdl so we check for updates
             console.log(lcl.blue("[YTDL - Info]"), "Checking for updates...");
-            youtubedl = require('youtube-dl-exec')
+            // youtubedl = require('youtube-dl-exec')
 
             // create initial embed - 327fe4d3-0986-435e-8d86-59785d86cde6
             const videoInitialEmbedP1 = new EmbedBuilder()
-                .setTitle(getLangMatch("videoInitialEmbedP1.title", lang.code));
+                .setTitle(getLangMatch("videoInitialEmbedP1.title", lang.code))
+                .addFields([{
+                        name: getLangMatch("videoInitialEmbedP1.urlTitle", lang.code),
+                        value: getLangMatch("videoInitialEmbedP1.urlDesc", lang.code),
+                        inline: true
+                    },
+                    {
+                        name: getLangMatch("videoInitialEmbedP1.embedStuckTitle", lang.code),
+                        value: getLangMatch("videoInitialEmbedP1.embedStuckDesc", lang.code),
+                        inline: true
+                    }
+                ])
+                .setColor(colorHex())
+                .setTimestamp();
             await interaction.editReply({
                 embeds: [videoInitialEmbedP1],
                 ephemeral: true
@@ -86,7 +99,7 @@ module.exports = {
             const somethingWentWrongEmbed = new EmbedBuilder()
                 .setTitle(getLangMatch("videoSomethingWentWrong.title", lang.code))
                 .setDescription(getLangMatch("videoSomethingWentWrong.description", lang.code))
-                .setColor("#FF0000")
+                .setColor("#ff6961")
                 .setTimestamp();
             await interaction.editReply({
                 embeds: [somethingWentWrongEmbed]

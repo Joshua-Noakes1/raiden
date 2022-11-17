@@ -18,10 +18,10 @@
             "info": "In commands/video.js",
             "uuid": "327fe4d3-0986-435e-8d86-59785d86cde6",
             "title": "Video Info",
-            "URLInfoTitle": "URL Info",
-            "URLInfoDesc": "le le le",
-            "embedStuckTitle": "Embed Stuck?",
-            "embedStuckDesc": "If the embed is stuck, try clicking the link below."
+            "urlTitle": "Strange Video URL?",
+            "urlDesc": "The video URL might look odd but it is correct and will send you to the video, for a more in-depth explanation [click here](https://github.com/Joshua-Noakes1/raiden/issues/69).",
+            "embedStuckTitle": "Stuck with just this embed?",
+            "embedStuckDesc": "Raiden is downloading the video in the background, please wait..."
         },
         "videoSomethingWentWrong": {
             "info": "In commands/video.js",
