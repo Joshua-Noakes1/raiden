@@ -1,6 +1,7 @@
 const lcl = require('cli-color');
 const colorHex = require('../lib/color');
 const getTikTok = require('../lib/fetchTikTok');
+const downloadMedia = require('../lib/downloadMedia');
 const {
     SlashCommandBuilder,
     EmbedBuilder
@@ -88,6 +89,9 @@ module.exports = {
                 });
                 return;
             }
+
+            var mediaTest = await downloadMedia(tikTokVideo.video.formats[0].url, tikTokVideo.video.formats[0].video_ext);
+            console.log(mediaTest);
 
             console.log(tikTokVideo);
 
