@@ -2,6 +2,7 @@ const lcl = require('cli-color');
 const colorHex = require('../lib/color');
 const getTikTok = require('../lib/fetchTikTok');
 const downloadMedia = require('../lib/downloadMedia');
+const findVideo = require('../lib/findVideo');
 const getTime = require('../lib/getTime');
 const {
     SlashCommandBuilder,
@@ -108,7 +109,7 @@ module.exports = {
                 "video": {
                     "id": `${tikTokVideo.video.id}`,
                     "description": `${tikTokVideo.video.title.toString().replace(/\s+$/, '')}`,
-                    "url": `${tikTokVideo.video.webpage_url}`,
+                    "url": `${tikTokVideo.video.uploader_url}/video/${tikTokVideo.video.id}`,
                     "uploadTime": await getTime(Math.floor(tikTokVideo.video.timestamp * 1000)),
                     "stats": {
                         "views": `${tikTokVideo.video.view_count}`,
@@ -120,11 +121,13 @@ module.exports = {
                         "watermark": {
                             "url": "",
                             "filesize": 0, // In Bytes
+                            "tooBig": false,
                             "format": ""
                         },
                         "clean": {
                             "url": "",
                             "filesize": 0, // In Bytes
+                            "tooBig": false,
                             "format": ""
                         }
                     },
@@ -140,6 +143,34 @@ module.exports = {
                     }
                 }
             }
+
+            // find videos
+            console.log(lcl.blue("[Video - Info]"), "Finding watermarkd video...");
+            var watermarkVideo = await findVideo("watermark", tikTokVideo.video.formats);
+            if (watermarkVideo.success) {
+                videoObject.video.media.watermark.url = watermarkVideo.url;
+                videoObject.video.media.watermark.filesize = watermarkVideo.filesize;
+                videoObject.video.media.watermark.tooBig = watermarkVideo.filesize >= 8000000 ? true : false;
+                videoObject.video.media.watermark.format = watermarkVideo.format;
+                console.log(lcl.green("[Video - Success]"), "Found watermarkd video.");
+            } else {
+                console.log(lcl.red("[Video - Error]"), "Could not find watermarked video.");
+            }
+
+
+            console.log(lcl.blue("[Video - Info]"), "Finding clean video...");
+            var cleanVideo = await findVideo("clean", tikTokVideo.video.formats);
+            if (cleanVideo.success) {
+                videoObject.video.media.clean.url = cleanVideo.url;
+                videoObject.video.media.clean.filesize = cleanVideo.filesize;
+                videoObject.video.media.clean.tooBig = cleanVideo.filesize >= 8000000 ? true : false;
+                videoObject.video.media.clean.format = cleanVideo.format;
+                console.log(lcl.green("[Video - Success]"), "Found clean video.");
+            } else {
+                console.log(lcl.red("[Video - Error]"), "Could not find clean video.");
+            }
+
+
 
             console.log(videoObject);
 
