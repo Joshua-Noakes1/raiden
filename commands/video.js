@@ -91,6 +91,17 @@ module.exports = {
             });
 
             // get TikTok
+            // p2 - aec6a50e-5062-43cc-9187-683d09763522
+            const videoEditEmbedP2 = new EmbedBuilder()
+                .setTitle(getLangMatch("videoEditEmbedP2.title", lang.code))
+                .setDescription(getLangMatch("videoEditEmbedP2.description", lang.code))
+                .setColor(colorHex())
+                .setTimestamp();
+            await interaction.editReply({
+                embeds: [videoEditEmbedP2],
+                ephemeral: true
+            });
+
             console.log(lcl.blue("[Video - Info]"), "Getting TikTok...");
             var tikTokVideo = await getTikTok(url);
             if (!tikTokVideo.success) {
@@ -178,10 +189,25 @@ module.exports = {
                         }
                     },
                     "cloudUpload": []
+                },
+                "audio": {
+                    "track": `${tikTokVideo.video.track || "Unknown"}`,
+                    "artist": `${tikTokVideo.video.artist || "Unknown"}`,
+                    "album": `${tikTokVideo.video.album || "Unknown"}`,
                 }
             }
 
             // find videos
+            // p3 - 6dcb268d-cb86-4af1-b9f9-2c6277fffa9e
+            const videoEditEmbedP3 = new EmbedBuilder()
+                .setTitle(getLangMatch("videoEditEmbedP3.title", lang.code))
+                .setDescription(getLangMatch("videoEditEmbedP3.description", lang.code))
+                .setColor(colorHex())
+                .setTimestamp();
+            await interaction.editReply({
+                embeds: [videoEditEmbedP3],
+                ephemeral: true
+            });
             console.log(lcl.blue("[Video - Info]"), "Finding watermarkd video...");
             var watermarkVideo = await findVideo("watermark", tikTokVideo.video.formats);
             if (watermarkVideo.success) {
@@ -253,6 +279,17 @@ module.exports = {
             }
 
             // attempt to download medua
+            // p4 - 2f4ecbf8-4709-4f8f-bb7c-f97ddbb984c8
+            const videoEditEmbedP4 = new EmbedBuilder()
+                .setTitle(getLangMatch("videoEditEmbedP4.title", lang.code))
+                .setDescription(getLangMatch("videoEditEmbedP4.description", lang.code))
+                .setColor(colorHex())
+                .setTimestamp();
+            await interaction.editReply({
+                embeds: [videoEditEmbedP4],
+                ephemeral: true
+            });
+
             console.log(lcl.blue("[Video - Info]"), "Attempting to download media...");
             if (watermarkVideo.success) {
                 console.log(lcl.blue("[Video - Info]"), "Downloading watermarkd video...");
@@ -313,9 +350,19 @@ module.exports = {
             }
             console.log(lcl.green("[Video - Success]"), "Downloaded media.");
 
-            console.log(videoObject)
-
             // upload to cloudinary if video is too big
+            if (videoObject.video.media.watermark.tooBig || videoObject.video.media.clean.tooBig) {
+                // p5 - 70ed8cf2-f11c-4808-90a8-c5fb47a1459e
+                const videoEditEmbedP5 = new EmbedBuilder()
+                    .setTitle(getLangMatch("videoEditEmbedP5.title", lang.code))
+                    .setDescription(getLangMatch("videoEditEmbedP5.description", lang.code))
+                    .setColor(colorHex())
+                    .setTimestamp();
+                await interaction.editReply({
+                    embeds: [videoEditEmbedP5],
+                    ephemeral: true
+                });
+            }
             if (videoObject.video.media.watermark.tooBig && videoObject.video.media.watermark.download.success) {
                 // upload to cloud
                 console.log(lcl.blue("[Video - Info]"), "Uploading watermarked to cloud...");
@@ -349,35 +396,56 @@ module.exports = {
             var attachments = [];
 
             // add all attachments to array if not in cloud
+            if (videoObject.video.thumbnail.static.download.success) {
+                attachments.push({
+                    "name": `${videoObject.video.thumbnail.static.fileName}.${videoObject.video.thumbnail.static.format}`,
+                    "attachment": videoObject.video.thumbnail.static.download.path
+                })
+            }
+            if (videoObject.video.thumbnail.dynamic.download.success) {
+                attachments.push({
+                    "name": `${videoObject.video.thumbnail.dynamic.fileName}.${videoObject.video.thumbnail.dynamic.format}`,
+                    "attachment": videoObject.video.thumbnail.dynamic.download.path
+                })
+            }
             if (videoObject.video.media.watermark.download.success && !videoObject.video.media.watermark.usingCloud) {
                 attachments.push({
-                    "name": videoObject.video.media.watermark.fileName,
+                    "name": `${videoObject.video.media.watermark.fileName}.${videoObject.video.media.watermark.format}`,
                     "attachment": videoObject.video.media.watermark.download.path
                 })
             }
             if (videoObject.video.media.clean.download.success && !videoObject.video.media.clean.usingCloud) {
                 attachments.push({
-                    "name": videoObject.video.media.clean.fileName,
+                    "name": `${videoObject.video.media.clean.fileName}.${videoObject.video.media.clean.format}`,
                     "attachment": videoObject.video.media.clean.download.path
                 })
             }
-            if (videoObject.video.thumbnail.dynamic.download.success) {
-                attachments.push({
-                    "name": videoObject.video.thumbnail.dynamic.fileName,
-                    "attachment": videoObject.video.thumbnail.dynamic.download.path
-                })
-            }
-            if (videoObject.video.thumbnail.static.download.success) {
-                attachments.push({
-                    "name": videoObject.video.thumbnail.static.fileName,
-                    "attachment": videoObject.video.thumbnail.static.download.path
-                })
-            }
 
-            console.log(lcl.blue("[Video - Info]"), "Uploading media to cloud...");
-            if (watermarkVideo.success) {
-                console.log(lcl.blue("[Video - Info]"), "Uploading watermarkd video...");
-                
+            // send attachemtnts to discord
+            // p6 - 7c1947a3-f36a-4026-b997-7a37254c1dc0
+            const videoEditEmbedP6 = new EmbedBuilder()
+                .setTitle(getLangMatch("videoEditEmbedP6.title", lang.code))
+                .setDescription(getLangMatch("videoEditEmbedP6.description", lang.code))
+                .setColor(colorHex())
+                .setTimestamp();
+            await interaction.editReply({
+                embeds: [videoEditEmbedP6],
+                ephemeral: true
+            });
+
+            if (attachments.length != 4) {
+                console.log(lcl.yellow("[Video - Warn]"), "Not all media has been included within Discord, some may be within cloudinary.");
+                if (videoObject.video.cloudUpload.length > 0) {
+                    console.log(lcl.blue("[Video - Info]"), "Sending cloudinary links to Discord...");
+                    var cloudString = `**All videos combined are too big to upload to Discord, so they have been uploaded to Cloudinary.** - ${videoObject.video.url}\n`;
+                    for (const cloudVid in videoObject.video.cloudUpload) {
+                        cloudString += `**${videoObject.video.cloudUpload[cloudVid].type.toString().charAt(0).toUpperCase()}${videoObject.video.cloudUpload[cloudVid].type.toString().slice(1)}**: ${videoObject.video.cloudUpload[cloudVid].url}\n`;
+                    }
+                    await interaction.followUp({
+                        "content": cloudString
+                    });
+                    console.log(lcl.green("[Video - Success]"), "Sent cloudinary links to Discord.");
+                }
             }
 
             // build final embed
@@ -386,11 +454,86 @@ module.exports = {
                 .setTitle(`@${videoObject.account.username} (${videoObject.account.name} - ${videoObject.account.id})`)
                 .setURL(`${videoObject.video.url}`)
                 .setDescription(`${videoObject.video.description}`)
-            // var mediaTest = await downloadMedia(tikTokVideo.video.formats[0].url, tikTokVideo.video.formats[0].video_ext);
-            // console.log(mediaTest);
+                .setColor(colorHex())
+                .setThumbnail(`attachment://${videoObject.video.thumbnail.static.fileName}.${videoObject.video.thumbnail.static.format}`)
+                .addFields([{
+                        name: `${getLangMatch("finalVideoEmbed.creatorUsername", lang.code)}`,
+                        value: `${videoObject.account.username}`,
+                        inline: true
+                    },
+                    {
+                        name: `${getLangMatch("finalVideoEmbed.creatorName", lang.code)}`,
+                        value: `${videoObject.account.name}`,
+                        inline: true
+                    },
+                    {
+                        name: "\u200b",
+                        value: "\u200b",
+                        inline: true
+                    }
+                ])
+                .addFields([{
+                        name: `${getLangMatch("finalVideoEmbed.videoViews", lang.code)}`,
+                        value: `${videoObject.video.stats.views}`,
+                        inline: true
+                    },
+                    {
+                        name: `${getLangMatch("finalVideoEmbed.videoLikes", lang.code)}`,
+                        value: `${videoObject.video.stats.likes}`,
+                        inline: true
+                    },
+                    {
+                        name: `${getLangMatch("finalVideoEmbed.videoComments", lang.code)}`,
+                        value: `${videoObject.video.stats.comments}`,
+                        inline: true
+                    }
+                ])
+                .addFields([{
+                        name: `${getLangMatch("finalVideoEmbed.trackName", lang.code)}`,
+                        value: `${videoObject.audio.track}`,
+                        inline: true
+                    },
+                    {
+                        name: `${getLangMatch("finalVideoEmbed.trackAlbum", lang.code)}`,
+                        value: `${videoObject.audio.album}`,
+                        inline: true
+                    },
+                    {
+                        name: `${getLangMatch("finalVideoEmbed.trackArtist", lang.code)}`,
+                        value: `${videoObject.audio.artist}`,
+                        inline: true
+                    }
+                ])
+                .setFooter({
+                    text: `Upload Date: ${videoObject.video.uploadTime.date}${videoObject.video.uploadTime.ordinal} ${videoObject.video.uploadTime.monthName} ${videoObject.video.uploadTime.year} ${videoObject.video.uploadTime.time.hour}:${videoObject.video.uploadTime.time.minutes}`
+                })
+                .setTimestamp();
+            console.log(lcl.green("[Video - Success]"), "Built final embed.");
 
-            // console.log(tikTokVideo);
+            if (attachments.length > 0) {
+                console.log(lcl.blue("[Video - Info]"), "Sending to discord...");
+                await interaction.followUp({
+                    "embeds": [videoFinalEmbed],
+                    "files": attachments
+                })
+                console.log(lcl.green("[Video - Success]"), "Sent to discord.");
+            }
 
+            // finsih p7 - 7c1947a3-f36a-4026-b997-7a37254c1dc0
+            const videoEditEmbedP7 = new EmbedBuilder()
+                .setTitle(getLangMatch("videoEditEmbedP7.title", lang.code))
+                .setColor(colorHex());
+            await interaction.editReply({
+                embeds: [videoEditEmbedP7],
+                ephemeral: true
+            });
+
+            // delete all files
+            console.log(lcl.blue("[Video - Info]"), "Deleting all files...");
+            await clearDownloads();
+            console.log(lcl.green("[Video - Success]"), "Deleted all files.");
+
+            // le end
         } catch (err) {
             // something went wrong - 5d36cc82-cd48-4a8b-b859-5ddffb7a63f2
             const somethingWentWrongEmbed = new EmbedBuilder()
