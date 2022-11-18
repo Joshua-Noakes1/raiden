@@ -350,6 +350,13 @@ module.exports = {
             }
             console.log(lcl.green("[Video - Success]"), "Downloaded media.");
 
+            // check filesize added
+            if (Math.floor(videoObject.video.media.watermark.filesize + videoObject.video.media.clean.filesize >= 8000000)) {
+                console.log(lcl.yellow("[Video - Warn]"), "Videos are too large together, forcing videos as \"tooBig\"");
+                videoObject.video.media.watermark.tooBig = true;
+                videoObject.video.media.clean.tooBig = true;
+            }
+
             // upload to cloudinary if video is too big
             if (videoObject.video.media.watermark.tooBig || videoObject.video.media.clean.tooBig) {
                 // p5 - 70ed8cf2-f11c-4808-90a8-c5fb47a1459e
