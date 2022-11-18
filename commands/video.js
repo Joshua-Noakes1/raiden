@@ -6,6 +6,7 @@ const findVideo = require('../lib/findVideo');
 const findThumbnail = require('../lib/findThumbnail');
 const webpGif = require('../lib/webpToGif');
 const getTime = require('../lib/getTime');
+const clearDownloads = require('../lib/clearDownloads');
 const {
     unlinkSync
 } = require('fs');
@@ -46,6 +47,9 @@ module.exports = {
             ephemeral: true
         });
         var lang = mapLang(interaction.locale);
+
+        // clear downloads
+        await clearDownloads();
 
         try {
             // check URL
@@ -117,10 +121,10 @@ module.exports = {
                     "url": `${tikTokVideo.video.uploader_url}/video/${tikTokVideo.video.id}`,
                     "uploadTime": await getTime(Math.floor(tikTokVideo.video.timestamp * 1000)),
                     "stats": {
-                        "views": `${tikTokVideo.video.view_count}`,
-                        "likes": `${tikTokVideo.video.like_count}`,
-                        "comments": `${tikTokVideo.video.comment_count}`,
-                        "reposts": `${tikTokVideo.video.repost_count}`,
+                        "views": `${tikTokVideo.video.view_count.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`,
+                        "likes": `${tikTokVideo.video.like_count.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`,
+                        "comments": `${tikTokVideo.video.comment_count.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`,
+                        "reposts": `${tikTokVideo.video.repost_count.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`,
                     },
                     "media": {
                         "watermark": {
@@ -295,8 +299,14 @@ module.exports = {
             }
             console.log(lcl.green("[Video - Success]"), "Downloaded media.");
 
-            console.log(videoObject.video.thumbnail);
+            console.log(videoObject)
 
+            // build final embed
+            console.log(lcl.blue("[Video - Info]"), "Building final embed...");
+            const videoFinalEmbed = new EmbedBuilder() // 79e91619-f6f1-4397-82c9-cabd195ade4a - Pxx
+                .setTitle(`@${videoObject.account.username} (${videoObject.account.name} - ${videoObject.account.id})`)
+                .setURL(`${videoObject.video.url}`)
+                .setDescription(`${videoObject.video.description}`)
             // var mediaTest = await downloadMedia(tikTokVideo.video.formats[0].url, tikTokVideo.video.formats[0].video_ext);
             // console.log(mediaTest);
 

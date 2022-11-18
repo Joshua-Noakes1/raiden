@@ -1,6 +1,7 @@
 require("dotenv").config();
 const lcl = require("cli-color");
 const path = require("path");
+const clearDownload = require('./lib/clearDownloads');
 const {
     REST
 } = require('@discordjs/rest');
@@ -62,6 +63,9 @@ client.once("ready", (client) => {
             console.error(err);
             process.exit(1);
         }
+
+        // clear downloads folder
+        await clearDownload();
 
         // finish
         console.log(lcl.blue("[Discord - Info]"), `Logged in as "${lcl.yellow(client.user.tag)}"!`);
