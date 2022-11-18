@@ -4,7 +4,11 @@ const getTikTok = require('../lib/fetchTikTok');
 const downloadMedia = require('../lib/downloadMedia');
 const findVideo = require('../lib/findVideo');
 const findThumbnail = require('../lib/findThumbnail');
+const webpGif = require('../lib/webpToGif');
 const getTime = require('../lib/getTime');
+const {
+    unlinkSync
+} = require('fs');
 const {
     SlashCommandBuilder,
     EmbedBuilder
@@ -123,25 +127,45 @@ module.exports = {
                             "url": "",
                             "filesize": 0, // In Bytes
                             "tooBig": false,
-                            "format": ""
+                            "inUse": false,
+                            "format": "",
+                            "download": {
+                                "success": false,
+                                "path": ""
+                            }
                         },
                         "clean": {
                             "url": "",
                             "filesize": 0, // In Bytes
                             "tooBig": false,
-                            "format": ""
+                            "inUse": false,
+                            "format": "",
+                            "download": {
+                                "success": false,
+                                "path": ""
+                            }
                         }
                     },
                     "thumbnail": {
                         "dynamic": {
                             "success": false,
+                            "inUse": false,
                             "url": "",
-                            "format": ""
+                            "format": "",
+                            "download": {
+                                "success": false,
+                                "path": ""
+                            }
                         },
                         "static": {
                             "success": false,
+                            "inUse": false,
                             "url": "",
-                            "format": ""
+                            "format": "",
+                            "download": {
+                                "success": false,
+                                "path": ""
+                            }
                         }
                     }
                 }
@@ -217,6 +241,62 @@ module.exports = {
                 videoObject.video.thumbnail.static.url = "https://i.imgur.com/3AUSafG.png";
                 videoObject.video.thumbnail.static.format = "png";
             }
+
+            // attempt to download medua
+            console.log(lcl.blue("[Video - Info]"), "Attempting to download media...");
+            if (watermarkVideo.success) {
+                console.log(lcl.blue("[Video - Info]"), "Downloading watermarkd video...");
+                var watermarkVideoDownload = await downloadMedia(videoObject.video.media.watermark.url, watermarkVideo.format);
+                if (watermarkVideoDownload.success) {
+                    videoObject.video.media.watermark.download.success = true;
+                    videoObject.video.media.watermark.download.path = watermarkVideoDownload.filePath;
+                    console.log(lcl.green("[Video - Success]"), "Downloaded watermarkd video.");
+                } else {
+                    console.log(lcl.red("[Video - Error]"), "Could not download watermarkd video.");
+                }
+            }
+            if (cleanVideo.success) {
+                console.log(lcl.blue("[Video - Info]"), "Downloading clean video...");
+                var cleanVideoDownload = await downloadMedia(videoObject.video.media.clean.url, cleanVideo.format);
+                if (cleanVideoDownload.success) {
+                    videoObject.video.media.clean.download.success = true;
+                    videoObject.video.media.clean.download.path = cleanVideoDownload.filePath;
+                    console.log(lcl.green("[Video - Success]"), "Downloaded clean video.");
+                } else {
+                    console.log(lcl.red("[Video - Error]"), "Could not download clean video.");
+                }
+            }
+
+            if (dynamicThumbnail.success) {
+                console.log(lcl.blue("[Video - Info]"), "Downloading dynamic thumbnail...");
+                var dynamicThumbnailDownload = await downloadMedia(videoObject.video.thumbnail.dynamic.url, "webp");
+                if (dynamicThumbnailDownload.success) {
+                    // attempt to convert to gif
+                    console.log(lcl.green("[Video - Success]"), "Downloaded dynamic thumbnail.");
+                    console.log(lcl.blue("[Video - Info]"), "Converting dynamic thumbnail to gif...");
+                    var dynamicThumbnailConvert = await webpGif(dynamicThumbnailDownload.filePath, dynamicThumbnailDownload.gifPath);
+                    if (dynamicThumbnailConvert.success) {
+                        videoObject.video.thumbnail.dynamic.download.success = true;
+                        videoObject.video.thumbnail.dynamic.download.path = dynamicThumbnailConvert.gifPath;
+                        await unlinkSync(dynamicThumbnailDownload.filePath);
+                        console.log(lcl.green("[Video - Success]"), "Converted dynamic thumbnail to gif.");
+                    }
+                } else {
+                    console.log(lcl.red("[Video - Error]"), "Could not download dynamic thumbnail.");
+                }
+            }
+            if (staticThumbnail.success) {
+                console.log(lcl.blue("[Video - Info]"), "Downloading static thumbnail...");
+                var staticThumbnailDownload = await downloadMedia(videoObject.video.thumbnail.static.url, "jpeg");
+                if (staticThumbnailDownload.success) {
+                    videoObject.video.thumbnail.static.download.success = true;
+                    videoObject.video.thumbnail.static.download.path = staticThumbnailDownload.filePath;
+                    console.log(lcl.green("[Video - Success]"), "Downloaded static thumbnail.");
+                } else {
+                    console.log(lcl.red("[Video - Error]"), "Could not download static thumbnail.");
+                }
+            }
+
 
             console.log(videoObject);
 
