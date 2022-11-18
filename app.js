@@ -36,17 +36,22 @@ const rest = new REST({
 }).setToken(process.env.TOKEN);
 
 client.once("ready", (client) => {
-    // get client ID
-    const clientId = client.user.id;
-
     (async () => {
+        // get client ID
+        const clientId = client.user.id;
+
+        // set status
+        await client.user.setActivity("TikTok", {
+            type: "WATCHING"
+        });
+
         // attempt to register commands
         try {
             console.log(lcl.blue("[Discord - Info]"), `Started refreshing ${lcl.yellow(commands.length)} application (/) ${commands.length > 1 ? "commands":"command"}.`);
-            if (process.env.server != undefined && process.env.server != "") {
-                console.log(lcl.blue("[Discord - Info (Dev)]"), "Using server ID: " + process.env.server);
+            if (process.env.SERVER != undefined && process.env.SERVER != "") {
+                console.log(lcl.blue("[Discord - Info (Dev)]"), "Using server ID: " + process.env.SERVER);
                 var data = await rest.put(
-                    Routes.applicationGuildCommands(clientId, process.env.server), {
+                    Routes.applicationGuildCommands(clientId, process.env.SERVER), {
                         body: commands
                     },
                 );

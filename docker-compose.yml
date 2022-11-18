@@ -1,0 +1,11 @@
+version: "3.3"
+services:
+  ayanami:
+    image: ghcr.io/joshua-noakes1/raiden
+    container_name: raiden
+    restart: unless-stopped
+    environment:
+      TOKEN: ""
+      CLOUDINARY_CLOUD_NAME: ""
+      CLOUDINARY_API_KEY: ""
+      CLOUDINARY_API_SECRET: ""
