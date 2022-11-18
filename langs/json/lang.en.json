@@ -34,6 +34,12 @@
             "uuid": "ee128fe2-bc0e-41a8-95b7-4872e32265f1",
             "title": "Video Error",
             "description": "Failed to fetch video, it may be private or unavailable. Please try again later."
+        },
+        "videoNoVideosFound" :{
+            "info": "In commands/video.js",
+            "uuid": "f5e8edff-2b89-496f-a52a-e61151952ffa",
+            "title": "No Videos Found",
+            "description": "No videos were found, this may be a \"Photo\" post or the video is private."
         }
     },
     "refs": {}

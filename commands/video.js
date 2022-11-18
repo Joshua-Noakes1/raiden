@@ -3,6 +3,7 @@ const colorHex = require('../lib/color');
 const getTikTok = require('../lib/fetchTikTok');
 const downloadMedia = require('../lib/downloadMedia');
 const findVideo = require('../lib/findVideo');
+const findThumbnail = require('../lib/findThumbnail');
 const getTime = require('../lib/getTime');
 const {
     SlashCommandBuilder,
@@ -133,10 +134,12 @@ module.exports = {
                     },
                     "thumbnail": {
                         "dynamic": {
+                            "success": false,
                             "url": "",
                             "format": ""
                         },
                         "static": {
+                            "success": false,
                             "url": "",
                             "format": ""
                         }
@@ -169,8 +172,51 @@ module.exports = {
             } else {
                 console.log(lcl.red("[Video - Error]"), "Could not find clean video.");
             }
+            if (!watermarkVideo.success && !cleanVideo.success) {
+                // no videos found - f5e8edff-2b89-496f-a52a-e61151952ffa
+                console.log(lcl.red("[Video - Error]"), "Could not find any videos.");
+                const videoFailEmbed = new EmbedBuilder()
+                    .setTitle(getLangMatch("videoNoVideosFound.title", lang.code))
+                    .setDescription(getLangMatch("videoNoVideosFound.description", lang.code))
+                    .setColor("#ff6961")
+                    .setTimestamp();
+                await interaction.editReply({
+                    embeds: [videoFailEmbed]
+                });
+                return;
+            } else {
+                console.log(lcl.green("[Video - Success]"), "Found videos.");
+            }
 
+            // find thumbnails
+            console.log(lcl.blue("[Video - Info]"), "Finding dynamic thumbnail...");
+            var dynamicThumbnail = await findThumbnail(tikTokVideo.video.thumbnails, "dynamic");
+            if (dynamicThumbnail.success) {
+                videoObject.video.thumbnail.dynamic.success = true;
+                videoObject.video.thumbnail.dynamic.url = dynamicThumbnail.url;
+                videoObject.video.thumbnail.dynamic.format = "webp";
+                console.log(lcl.green("[Video - Success]"), "Found dynamic thumbnail.");
+            } else {
+                console.log(lcl.red("[Video - Error]"), "Could not find dynamic thumbnail.");
+            }
 
+            console.log(lcl.blue("[Video - Info]"), "Finding static thumbnail...");
+            var staticThumbnail = await findThumbnail(tikTokVideo.video.thumbnails, "static");
+            if (staticThumbnail.success) {
+                videoObject.video.thumbnail.static.success = true;
+                videoObject.video.thumbnail.static.url = staticThumbnail.url;
+                videoObject.video.thumbnail.static.format = "jpeg";
+                console.log(lcl.green("[Video - Success]"), "Found static thumbnail.");
+            } else {
+                console.log(lcl.red("[Video - Error]"), "Could not find static thumbnail.");
+            }
+            // check if static image exists if not replace with non found image
+            if (!staticThumbnail.success) {
+                console.log(lcl.yellow("[Video - Warn]"), "Could not find static thumbnail, using fallback.");
+                videoObject.video.thumbnail.static.success = true;
+                videoObject.video.thumbnail.static.url = "https://i.imgur.com/3AUSafG.png";
+                videoObject.video.thumbnail.static.format = "png";
+            }
 
             console.log(videoObject);
 
