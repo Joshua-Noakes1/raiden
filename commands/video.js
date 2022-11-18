@@ -127,7 +127,6 @@ module.exports = {
                             "url": "",
                             "filesize": 0, // In Bytes
                             "tooBig": false,
-                            "inUse": false,
                             "format": "",
                             "download": {
                                 "success": false,
@@ -138,7 +137,6 @@ module.exports = {
                             "url": "",
                             "filesize": 0, // In Bytes
                             "tooBig": false,
-                            "inUse": false,
                             "format": "",
                             "download": {
                                 "success": false,
@@ -149,7 +147,6 @@ module.exports = {
                     "thumbnail": {
                         "dynamic": {
                             "success": false,
-                            "inUse": false,
                             "url": "",
                             "format": "",
                             "download": {
@@ -159,7 +156,6 @@ module.exports = {
                         },
                         "static": {
                             "success": false,
-                            "inUse": false,
                             "url": "",
                             "format": "",
                             "download": {
@@ -176,8 +172,8 @@ module.exports = {
             var watermarkVideo = await findVideo("watermark", tikTokVideo.video.formats);
             if (watermarkVideo.success) {
                 videoObject.video.media.watermark.url = watermarkVideo.url;
-                videoObject.video.media.watermark.filesize = watermarkVideo.filesize;
-                videoObject.video.media.watermark.tooBig = watermarkVideo.filesize >= 8000000 ? true : false;
+                videoObject.video.media.watermark.filesize = watermarkVideo.size;
+                videoObject.video.media.watermark.tooBig = watermarkVideo.size >= 8000000 ? true : false;
                 videoObject.video.media.watermark.format = watermarkVideo.format;
                 console.log(lcl.green("[Video - Success]"), "Found watermarkd video.");
             } else {
@@ -189,8 +185,8 @@ module.exports = {
             var cleanVideo = await findVideo("clean", tikTokVideo.video.formats);
             if (cleanVideo.success) {
                 videoObject.video.media.clean.url = cleanVideo.url;
-                videoObject.video.media.clean.filesize = cleanVideo.filesize;
-                videoObject.video.media.clean.tooBig = cleanVideo.filesize >= 8000000 ? true : false;
+                videoObject.video.media.clean.filesize = cleanVideo.size;
+                videoObject.video.media.clean.tooBig = cleanVideo.size >= 8000000 ? true : false;
                 videoObject.video.media.clean.format = cleanVideo.format;
                 console.log(lcl.green("[Video - Success]"), "Found clean video.");
             } else {
@@ -277,7 +273,8 @@ module.exports = {
                     var dynamicThumbnailConvert = await webpGif(dynamicThumbnailDownload.filePath, dynamicThumbnailDownload.gifPath);
                     if (dynamicThumbnailConvert.success) {
                         videoObject.video.thumbnail.dynamic.download.success = true;
-                        videoObject.video.thumbnail.dynamic.download.path = dynamicThumbnailConvert.gifPath;
+                        videoObject.video.thumbnail.dynamic.format = "gif";
+                        videoObject.video.thumbnail.dynamic.download.path = dynamicThumbnailDownload.gifPath;
                         await unlinkSync(dynamicThumbnailDownload.filePath);
                         console.log(lcl.green("[Video - Success]"), "Converted dynamic thumbnail to gif.");
                     }
@@ -296,9 +293,9 @@ module.exports = {
                     console.log(lcl.red("[Video - Error]"), "Could not download static thumbnail.");
                 }
             }
+            console.log(lcl.green("[Video - Success]"), "Downloaded media.");
 
-
-            console.log(videoObject);
+            console.log(videoObject.video.thumbnail);
 
             // var mediaTest = await downloadMedia(tikTokVideo.video.formats[0].url, tikTokVideo.video.formats[0].video_ext);
             // console.log(mediaTest);
