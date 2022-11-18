@@ -1,6 +1,12 @@
 # Langs
 
-Raiden uses LinguiJS to manage translations. The translations are stored in the `langs/locales` folder.
+Raiden uses Lingui to manage translations. The translations are stored in the `langs/locales` folder.
+
+## Current translations
+
+| Language     | File           | Maintainer  |
+| ------------ | -------------- | ----------- |
+| English - 🇬🇧 | `lang.en.json` | Raiden Team |
 
 ## Adding a new language
 
