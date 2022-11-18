@@ -7,6 +7,7 @@ const findThumbnail = require('../lib/findThumbnail');
 const webpGif = require('../lib/webpToGif');
 const getTime = require('../lib/getTime');
 const clearDownloads = require('../lib/clearDownloads');
+const cloudinaryUpload = require('../lib/cloudinaryUpload');
 const {
     unlinkSync
 } = require('fs');
@@ -129,21 +130,27 @@ module.exports = {
                     "media": {
                         "watermark": {
                             "url": "",
+                            "fileName": "",
                             "filesize": 0, // In Bytes
                             "tooBig": false,
+                            "usingCloud": false,
                             "format": "",
                             "download": {
                                 "success": false,
+                                "url": "",
                                 "path": ""
                             }
                         },
                         "clean": {
                             "url": "",
+                            "fileName": "",
                             "filesize": 0, // In Bytes
                             "tooBig": false,
+                            "usingCloud": false,
                             "format": "",
                             "download": {
                                 "success": false,
+                                "url": "",
                                 "path": ""
                             }
                         }
@@ -250,6 +257,7 @@ module.exports = {
                 if (watermarkVideoDownload.success) {
                     videoObject.video.media.watermark.download.success = true;
                     videoObject.video.media.watermark.download.path = watermarkVideoDownload.filePath;
+                    videoObject.video.media.watermark.fileName = watermarkVideoDownload.uuid;
                     console.log(lcl.green("[Video - Success]"), "Downloaded watermarkd video.");
                 } else {
                     console.log(lcl.red("[Video - Error]"), "Could not download watermarkd video.");
@@ -261,6 +269,7 @@ module.exports = {
                 if (cleanVideoDownload.success) {
                     videoObject.video.media.clean.download.success = true;
                     videoObject.video.media.clean.download.path = cleanVideoDownload.filePath;
+                    videoObject.video.media.clean.fileName = cleanVideoDownload.uuid;
                     console.log(lcl.green("[Video - Success]"), "Downloaded clean video.");
                 } else {
                     console.log(lcl.red("[Video - Error]"), "Could not download clean video.");
@@ -301,6 +310,13 @@ module.exports = {
 
             console.log(videoObject)
 
+            // test cloud upload
+            console.log(lcl.blue("[Video - Info]"), "Uploading media to cloud...");
+            if (watermarkVideo.success) {
+                console.log(lcl.blue("[Video - Info]"), "Uploading watermarkd video...");
+                var watermarkVideoUpload = await cloudinaryUpload(videoObject.video.media.watermark.download.path, videoObject.video.media.watermark.fileName);
+            }
+
             // build final embed
             console.log(lcl.blue("[Video - Info]"), "Building final embed...");
             const videoFinalEmbed = new EmbedBuilder() // 79e91619-f6f1-4397-82c9-cabd195ade4a - Pxx
@@ -322,6 +338,9 @@ module.exports = {
             await interaction.editReply({
                 embeds: [somethingWentWrongEmbed]
             });
+
+            // clear download folder
+            await clearDownloads();
 
             console.log(lcl.red("[Discord - Error]"), err.message);
             return console.log(lcl.red("[Discord - Error]"), err.stack);
