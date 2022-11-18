@@ -158,6 +158,7 @@ module.exports = {
                     "thumbnail": {
                         "dynamic": {
                             "success": false,
+                            "fileName": "",
                             "url": "",
                             "format": "",
                             "download": {
@@ -167,6 +168,7 @@ module.exports = {
                         },
                         "static": {
                             "success": false,
+                            "fileName": "",
                             "url": "",
                             "format": "",
                             "download": {
@@ -174,7 +176,8 @@ module.exports = {
                                 "path": ""
                             }
                         }
-                    }
+                    },
+                    "cloudUpload": []
                 }
             }
 
@@ -288,6 +291,7 @@ module.exports = {
                         videoObject.video.thumbnail.dynamic.download.success = true;
                         videoObject.video.thumbnail.dynamic.format = "gif";
                         videoObject.video.thumbnail.dynamic.download.path = dynamicThumbnailDownload.gifPath;
+                        videoObject.video.thumbnail.dynamic.fileName = dynamicThumbnailDownload.uuid;
                         await unlinkSync(dynamicThumbnailDownload.filePath);
                         console.log(lcl.green("[Video - Success]"), "Converted dynamic thumbnail to gif.");
                     }
@@ -301,6 +305,7 @@ module.exports = {
                 if (staticThumbnailDownload.success) {
                     videoObject.video.thumbnail.static.download.success = true;
                     videoObject.video.thumbnail.static.download.path = staticThumbnailDownload.filePath;
+                    videoObject.video.thumbnail.static.fileName = staticThumbnailDownload.uuid;
                     console.log(lcl.green("[Video - Success]"), "Downloaded static thumbnail.");
                 } else {
                     console.log(lcl.red("[Video - Error]"), "Could not download static thumbnail.");
@@ -310,11 +315,69 @@ module.exports = {
 
             console.log(videoObject)
 
-            // test cloud upload
+            // upload to cloudinary if video is too big
+            if (videoObject.video.media.watermark.tooBig && videoObject.video.media.watermark.download.success) {
+                // upload to cloud
+                console.log(lcl.blue("[Video - Info]"), "Uploading watermarked to cloud...");
+                var watermarkVideoUpload = await cloudinaryUpload(videoObject.video.media.watermark.download.path, videoObject.video.media.watermark.fileName);
+                if (watermarkVideoUpload.success) {
+                    videoObject.video.media.watermark.usingCloud = true;
+                    videoObject.video.media.watermark.download.url = watermarkVideoUpload.url;
+                    videoObject.video.cloudUpload.push({
+                        "type": "watermark",
+                        "url": watermarkVideoUpload.url
+                    })
+                    console.log(lcl.green("[Video - Success]"), "Uploaded watermarked to cloud.");
+                }
+            }
+            if (videoObject.video.media.clean.tooBig && videoObject.video.media.clean.download.success) {
+                // upload to cloud
+                console.log(lcl.blue("[Video - Info]"), "Uploading clean to cloud...");
+                var cleanVideoUpload = await cloudinaryUpload(videoObject.video.media.clean.download.path, videoObject.video.media.clean.fileName);
+                if (cleanVideoUpload.success) {
+                    videoObject.video.media.clean.usingCloud = true;
+                    videoObject.video.media.clean.download.url = cleanVideoUpload.url;
+                    videoObject.video.cloudUpload.push({
+                        "type": "clean",
+                        "url": cleanVideoUpload.url
+                    })
+                    console.log(lcl.green("[Video - Success]"), "Uploaded clean to cloud.");
+                }
+            }
+
+            // add attachments to video upload object
+            var attachments = [];
+
+            // add all attachments to array if not in cloud
+            if (videoObject.video.media.watermark.download.success && !videoObject.video.media.watermark.usingCloud) {
+                attachments.push({
+                    "name": videoObject.video.media.watermark.fileName,
+                    "attachment": videoObject.video.media.watermark.download.path
+                })
+            }
+            if (videoObject.video.media.clean.download.success && !videoObject.video.media.clean.usingCloud) {
+                attachments.push({
+                    "name": videoObject.video.media.clean.fileName,
+                    "attachment": videoObject.video.media.clean.download.path
+                })
+            }
+            if (videoObject.video.thumbnail.dynamic.download.success) {
+                attachments.push({
+                    "name": videoObject.video.thumbnail.dynamic.fileName,
+                    "attachment": videoObject.video.thumbnail.dynamic.download.path
+                })
+            }
+            if (videoObject.video.thumbnail.static.download.success) {
+                attachments.push({
+                    "name": videoObject.video.thumbnail.static.fileName,
+                    "attachment": videoObject.video.thumbnail.static.download.path
+                })
+            }
+
             console.log(lcl.blue("[Video - Info]"), "Uploading media to cloud...");
             if (watermarkVideo.success) {
                 console.log(lcl.blue("[Video - Info]"), "Uploading watermarkd video...");
-                var watermarkVideoUpload = await cloudinaryUpload(videoObject.video.media.watermark.download.path, videoObject.video.media.watermark.fileName);
+                
             }
 
             // build final embed
