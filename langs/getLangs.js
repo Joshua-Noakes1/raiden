@@ -5,7 +5,7 @@ const {
     TypeMappers
 } = require('linguini');
 
-let langs = new Linguini(path.join(__dirname, 'json'), 'lang');
+let langs = new Linguini(path.join(__dirname, 'locales'), 'lang');
 
 // return lang string to client
 function mapLang(langString) {
