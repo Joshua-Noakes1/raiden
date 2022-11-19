@@ -9,7 +9,8 @@ const {
     Client,
     GatewayIntentBits,
     Routes,
-    Collection
+    Collection,
+    ActivityType
 } = require("discord.js");
 const {
     readdirSync
@@ -41,9 +42,36 @@ client.once("ready", (client) => {
         const clientId = client.user.id;
 
         // set status
-        await client.user.setActivity("TikTok", {
-            type: "WATCHING"
+        await client.user.setPresence({
+            activities: [{
+                name: `TikTok`,
+                type: ActivityType.Watching,
+            }],
+            status: 'idle'
         });
+
+        // try and clear all existing commands
+        try {
+            console.log(lcl.blue("[Discord - Info]"), "Clearing all existing commands, this may take a minute...");
+            if (process.env.SERVER != undefined && process.env.SERVER != "") {
+                console.log(lcl.blue("[Discord - Info (Dev)]"), "Using server ID: " + process.env.SERVER);
+                await rest.put(Routes.applicationGuildCommands(clientId, process.env.SERVER), {
+                    body: []
+                });
+                await rest.put(Routes.applicationCommands(clientId), {
+                    body: []
+                });
+            } else {
+                await rest.put(Routes.applicationCommands(clientId), {
+                    body: []
+                });
+            }
+            console.log(lcl.green("[Discord - Success]"), "Successfully cleared all commands.");
+        } catch (err) {
+            console.log(lcl.red("[Discord - Error]"), "Failed to clear commands.");
+            console.error(err);
+            process.exit(1);
+        }
 
         // attempt to register commands
         try {
@@ -69,11 +97,11 @@ client.once("ready", (client) => {
             process.exit(1);
         }
 
-        // clear downloads folder
-        await clearDownload();
-
         // finish
         console.log(lcl.blue("[Discord - Info]"), `Logged in as "${lcl.yellow(client.user.tag)}"!`);
+
+        // clear downloads folder
+        await clearDownload();
     })();
 });
 
