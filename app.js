@@ -10,10 +10,13 @@ const {
     GatewayIntentBits,
     Routes,
     Collection,
-    ActivityType
+    ActivityType,
+    EmbedBuilder
 } = require("discord.js");
 const {
-    readdirSync
+    readdirSync,
+    writeFileSync,
+    existsSync
 } = require('fs');
 
 const client = new Client({
@@ -50,27 +53,32 @@ client.once("ready", (client) => {
             status: 'idle'
         });
 
-        // try and clear all existing commands
-        try {
-            console.log(lcl.blue("[Discord - Info]"), "Clearing all existing commands, this may take a minute...");
-            if (process.env.SERVER != undefined && process.env.SERVER != "") {
-                console.log(lcl.blue("[Discord - Info (Dev)]"), "Using server ID: " + process.env.SERVER);
-                await rest.put(Routes.applicationGuildCommands(clientId, process.env.SERVER), {
-                    body: []
-                });
-                await rest.put(Routes.applicationCommands(clientId), {
-                    body: []
-                });
-            } else {
-                await rest.put(Routes.applicationCommands(clientId), {
-                    body: []
-                });
+        // try and clear all existing commands after checking if alreadClear.txt is not present
+        if (!existsSync(path.join(__dirname, 'alreadyClear.txt'))) {
+            try {
+                console.log(lcl.blue("[Discord - Info]"), "Clearing all existing commands, this may take a minute...");
+                if (process.env.SERVER != undefined && process.env.SERVER != "") {
+                    console.log(lcl.blue("[Discord - Info (Dev)]"), "Using server ID: " + process.env.SERVER);
+                    await rest.put(Routes.applicationGuildCommands(clientId, process.env.SERVER), {
+                        body: []
+                    });
+                    await rest.put(Routes.applicationCommands(clientId), {
+                        body: []
+                    });
+                } else {
+                    await rest.put(Routes.applicationCommands(clientId), {
+                        body: []
+                    });
+                }
+
+                // write to alreadClear.txt
+                writeFileSync(path.join(__dirname, 'alreadyClear.txt'), `true; ${new Date()}`);
+                console.log(lcl.green("[Discord - Success]"), "Successfully cleared all commands.");
+            } catch (err) {
+                console.log(lcl.red("[Discord - Error]"), "Failed to clear commands.");
+                console.error(err);
+                process.exit(1);
             }
-            console.log(lcl.green("[Discord - Success]"), "Successfully cleared all commands.");
-        } catch (err) {
-            console.log(lcl.red("[Discord - Error]"), "Failed to clear commands.");
-            console.error(err);
-            process.exit(1);
         }
 
         // attempt to register commands
@@ -116,21 +124,37 @@ client.on('interactionCreate', async interaction => {
 
         // try executing command
         try {
-            console.log(lcl.blue("[Discord - Info]"), `"${lcl.yellow(interaction.user.tag)}" used the "${lcl.yellow(interaction.commandName)}" (/) command in "${lcl.yellow(interaction.guild.name)}".`);
+            console.log(lcl.blue("[Discord - Info]"), `"${lcl.yellow(interaction.user.tag)}" used the "${lcl.yellow(interaction.commandName)}" (/) command${interaction.guildId !== null ? ` in "${lcl.yellow(interaction.guild.name)}"` : ''}.`);
             await command.execute(interaction);
         } catch (err) {
             console.log(lcl.red("[Discord - Error]"), `Failed to execute command: "${interaction.commandName}"`);
             console.error(err);
+
+            // create embed - TODO: Translate
+            const interactionErrorEmbed = new EmbedBuilder()
+                .setTitle("Error")
+                .setDescription("There was an error while executing this command!")
+                .setColor("#ff6961")
+                .setTimestamp();
             await interaction.reply({
-                content: 'There was an error while executing this command!',
+                // content: 'There was an error while executing this command!',
+                embeds: [interactionErrorEmbed],
                 ephemeral: true
             });
         }
     } catch (err) {
         console.log(lcl.red("[Discord - Error]"), `Failed to execute command: "${interaction.commandName}"`);
         console.error(err);
+
+        // create embed - TODO: Translate
+        const interactionErrorEmbed = new EmbedBuilder()
+            .setTitle("Error")
+            .setDescription("There was an error while executing this command!")
+            .setColor("#ff6961")
+            .setTimestamp();
         await interaction.reply({
-            content: 'There was an error while executing this command!',
+            // content: 'There was an error while executing this command!',
+            embeds: [interactionErrorEmbed],
             ephemeral: true
         });
     }

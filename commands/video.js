@@ -444,7 +444,7 @@ module.exports = {
                 console.log(lcl.yellow("[Video - Warn]"), "Not all media has been included within Discord, some may be within cloudinary.");
                 if (videoObject.video.cloudUpload.length > 0) {
                     console.log(lcl.blue("[Video - Info]"), "Sending cloudinary links to Discord...");
-                    var cloudString = `**All videos combined are too big to upload to Discord, so they have been uploaded to Cloudinary.** - ${videoObject.video.url}\n`;
+                    var cloudString = `**All videos combined are too big to upload to Discord, so they have been uploaded to Cloudinary.**`; // TODO: add lang
                     for (const cloudVid in videoObject.video.cloudUpload) {
                         cloudString += `**${videoObject.video.cloudUpload[cloudVid].type.toString().charAt(0).toUpperCase()}${videoObject.video.cloudUpload[cloudVid].type.toString().slice(1)}**: ${videoObject.video.cloudUpload[cloudVid].url}\n`;
                     }
