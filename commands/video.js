@@ -379,6 +379,7 @@ module.exports = {
                     videoObject.video.media.watermark.download.url = watermarkVideoUpload.url;
                     videoObject.video.cloudUpload.push({
                         "type": "watermark",
+                        "langStr": "cloudinaryUploadString.watermark",
                         "url": watermarkVideoUpload.url
                     })
                     console.log(lcl.green("[Video - Success]"), "Uploaded watermarked to cloud.");
@@ -393,6 +394,7 @@ module.exports = {
                     videoObject.video.media.clean.download.url = cleanVideoUpload.url;
                     videoObject.video.cloudUpload.push({
                         "type": "clean",
+                        "langStr": "cloudinaryUploadString.clean",
                         "url": cleanVideoUpload.url
                     })
                     console.log(lcl.green("[Video - Success]"), "Uploaded clean to cloud.");
@@ -444,9 +446,9 @@ module.exports = {
                 console.log(lcl.yellow("[Video - Warn]"), "Not all media has been included within Discord, some may be within cloudinary.");
                 if (videoObject.video.cloudUpload.length > 0) {
                     console.log(lcl.blue("[Video - Info]"), "Sending cloudinary links to Discord...");
-                    var cloudString = `**All videos combined are too big to upload to Discord, so they have been uploaded to Cloudinary.**`; // TODO: add lang
+                    var cloudString = `${getLangMatch("cloudinaryUploadString.default", lang.code)}\n`; // 075fbcc8-3e06-4f33-885e-4d68e81beab3
                     for (const cloudVid in videoObject.video.cloudUpload) {
-                        cloudString += `**${videoObject.video.cloudUpload[cloudVid].type.toString().charAt(0).toUpperCase()}${videoObject.video.cloudUpload[cloudVid].type.toString().slice(1)}**: ${videoObject.video.cloudUpload[cloudVid].url}\n`;
+                        cloudString += `**[${getLangMatch(videoObject.video.cloudUpload[cloudVid].langStr, lang.code)}](${videoObject.video.cloudUpload[cloudVid].url})**\n`;
                     }
                     await interaction.followUp({
                         "content": cloudString

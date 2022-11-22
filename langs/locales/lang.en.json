@@ -87,6 +87,13 @@
             "info": "In commands/video.js",
             "uuid": "9252ee95-ca6d-4ffa-ab33-d4084dedee04",
             "title": "[TikTok Video] Finished"
+        },
+        "cloudinaryUploadString": {
+            "info": "In commands/video.js",
+            "uuid": "075fbcc8-3e06-4f33-885e-4d68e81beab3",
+            "default": "**All videos combined are too big to upload to Discord, so they have been uploaded to Cloudinary.**",
+            "watermark": "Watermark",
+            "clean": "Clean"
         }
     },
     "refs": {}
