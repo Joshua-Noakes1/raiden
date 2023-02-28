@@ -24,7 +24,7 @@
             "info": "In commands/video.js",
             "uuid": "ee128fe2-bc0e-41a8-95b7-4872e32265f1",
             "title": "Video Error",
-            "description": "Failed to fetch video, it may be private or unavailable. Please try again later."
+            "description": "Failed to fetch video / account, it may be private or unavailable. Please try again later."
         },
         "videoNoVideosFound": {
             "info": "In commands/video.js",
@@ -45,7 +45,7 @@
             "info": "In commands/video.js",
             "uuid": "aec6a50e-5062-43cc-9187-683d09763522",
             "title": "[TikTok Video] Video Data - 1 / 5",
-            "description": "Raiden is currently extracting the video data..."
+            "description": "Raiden is currently extracting the video data, This may take a while if you've requested an account..."
         },
         "videoEditEmbedP3": {
             "info": "In commands/video.js",

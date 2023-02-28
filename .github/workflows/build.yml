@@ -1,4 +1,4 @@
-# Build docker buildx for AMD64, Arm64 and ArmV7
+# Build docker buildx for AMD64, Arm64 and push to GHCR
 name: Build Docker Image
 
 on:
@@ -50,7 +50,7 @@ jobs:
         with:
           context: .
           file: ./dockerfile
-          platforms: linux/amd64,linux/arm64,linux/arm/v7
+          platforms: linux/amd64,linux/arm64
           push: true
           tags: |
             ${{ env.REGISTRY_GHCR }}/${{ steps.meta-latest.outputs.tags }}

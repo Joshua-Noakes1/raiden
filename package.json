@@ -4,7 +4,8 @@
   "description": "Raiden is a Discord bot built to fetch all versions (watermarked and un-watermarked) of a TikTok video.",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "dev": "nodemon app.js"
   },
   "repository": {
     "type": "git",
