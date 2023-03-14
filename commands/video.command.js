@@ -36,14 +36,13 @@ module.exports = {
                 console.log(lcl.red("[Video - Error]"), "Unsupported URL provided.");
                 const unsupportedURLError = new EmbedBuilder()
                     .setTitle("Unsupported site")
-                    .setDescription("Raiden currently does not support this site, If the site has support in [yt-dlp](https://github.com/yt-dlp/yt-dlp) please open an [issue](https://github.com/Joshua-Noakes1/raiden/issues)")
+                    .setDescription("Raiden currently does not support this site, If the site has support in [yt-dlp](https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md) please open an [issue](https://github.com/Joshua-Noakes1/raiden/issues)")
                     .setColor("#ff6961")
                     .setTimestamp();
                 await interaction.editReply({
                     embeds: [unsupportedURLError]
                 });
                 return;
-
         }
     }
 }
