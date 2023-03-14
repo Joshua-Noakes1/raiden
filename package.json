@@ -1,0 +1,38 @@
+{
+  "name": "raiden",
+  "version": "5.0.0",
+  "description": "Open-source Social Media video download bot ",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon app.js",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Joshua-Noakes1/raiden.git"
+  },
+  "keywords": [
+    "bot",
+    "video",
+    "discord",
+    "discord-bot",
+    "discordbot",
+    "tiktok"
+  ],
+  "author": "Joshua-Noakes1",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/Joshua-Noakes1/raiden/issues"
+  },
+  "homepage": "https://github.com/Joshua-Noakes1/raiden#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.21"
+  },
+  "dependencies": {
+    "@discordjs/rest": "^1.6.0",
+    "cli-color": "^2.0.3",
+    "discord.js": "^14.8.0",
+    "dotenv": "^16.0.3",
+    "path": "^0.12.7"
+  }
+}

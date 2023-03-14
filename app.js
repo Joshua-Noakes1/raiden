@@ -1,7 +1,6 @@
 require("dotenv").config();
 const lcl = require("cli-color");
 const path = require("path");
-const clearDownload = require('./lib/clearDownloads');
 const {
     REST
 } = require('@discordjs/rest');
@@ -14,25 +13,27 @@ const {
     EmbedBuilder
 } = require("discord.js");
 const {
-    readdirSync,
-    writeFileSync,
-    existsSync
+    readdirSync
 } = require('fs');
 
 const client = new Client({
     disableEveryone: true,
-    intents: [GatewayIntentBits.Guilds],
+    intents: [GatewayIntentBits.Guilds, GatewayIntentBits.DirectMessages],
 });
 
 // get base for commands
 const commands = [];
-const commandFiles = readdirSync(path.join(__dirname, 'commands')).filter(file => file.endsWith('.js'));
-client.commands = new Collection();
+try {
+    const commandFiles = readdirSync(path.join(__dirname, 'commands')).filter(file => file.endsWith('.js'));
+    client.commands = new Collection();
 
-for (const file of commandFiles) {
-    const command = require(path.join(__dirname, 'commands', file));
-    commands.push(command.data.toJSON());
-    client.commands.set(command.data.name, command);
+    for (const file of commandFiles) {
+        const command = require(path.join(__dirname, 'commands', file));
+        commands.push(command.data.toJSON());
+        client.commands.set(command.data.name, command);
+    }
+} catch (err) {
+    console.log(lcl.red("[Startup - Error]"), "Failed to load commands.", lcl.yellow(err.toString().split("Error: ")[1]));
 }
 
 const rest = new REST({
@@ -41,75 +42,87 @@ const rest = new REST({
 
 client.once("ready", (client) => {
     (async () => {
+
         // get client ID
         const clientId = client.user.id;
 
-        // set status
-        await client.user.setPresence({
-            activities: [{
-                name: `TikTok`,
-                type: ActivityType.Watching,
-            }],
-            status: 'idle'
-        });
-
-        // try and clear all existing commands after checking if alreadClear.txt is not present
-        if (!existsSync(path.join(__dirname, 'alreadyClear.txt'))) {
-            try {
-                console.log(lcl.blue("[Discord - Info]"), "Clearing all existing commands, this may take a minute...");
+        // clear commands if not already clear and user wants to clear
+        try {
+            if (process.env.NOT_CLEAR_COMMANDS !== "true" || commands.length <= 0) {
+                // get all commands
+                var applicationCommands = [];
                 if (process.env.SERVER != undefined && process.env.SERVER != "") {
-                    console.log(lcl.blue("[Discord - Info (Dev)]"), "Using server ID: " + process.env.SERVER);
-                    await rest.put(Routes.applicationGuildCommands(clientId, process.env.SERVER), {
-                        body: []
-                    });
-                    await rest.put(Routes.applicationCommands(clientId), {
-                        body: []
-                    });
-                } else {
-                    await rest.put(Routes.applicationCommands(clientId), {
-                        body: []
+                    await rest.get(Routes.applicationGuildCommands(clientId, process.env.SERVER)).then((data) => {
+                        applicationCommands.push(data);
                     });
                 }
+                await rest.get(Routes.applicationCommands(clientId)).then((data) => {
+                    applicationCommands.push(data);
+                });
+                // remove duplicates
+                applicationCommands = applicationCommands.flat().filter((v, i, a) => a.findIndex(t => (t.name === v.name)) === i);
 
-                // write to alreadClear.txt
-                writeFileSync(path.join(__dirname, 'alreadyClear.txt'), `true; ${new Date()}`);
-                console.log(lcl.green("[Discord - Success]"), "Successfully cleared all commands.");
+                // clear commands
+                if (applicationCommands != undefined && applicationCommands.length > 0) {
+                    console.log(lcl.blue("[Discord - Info]"), "Clearing all existing commands, this may take a minute...");
+                    if (process.env.SERVER != undefined && process.env.SERVER != "") {
+                        console.log(lcl.blue("[Discord - Info (Dev)]"), "Using server ID: " + process.env.SERVER);
+                        await rest.put(Routes.applicationGuildCommands(clientId, process.env.SERVER), {
+                            body: []
+                        });
+                        await rest.put(Routes.applicationCommands(clientId), {
+                            body: []
+                        });
+                    } else {
+                        await rest.put(Routes.applicationCommands(clientId), {
+                            body: []
+                        });
+                    }
+                    console.log(lcl.green("[Discord - Success]"), "Successfully cleared all commands.");
+                }
+            }
+        } catch (err) {
+            console.log(lcl.red("[Discord - Error]"), "Failed to clear commands.");
+            console.error(err);
+            process.exit(1);
+        }
+
+
+        if (commands.length > 0) {
+            // attempt to register commands
+            try {
+                console.log(lcl.blue("[Discord - Info]"), `Started refreshing ${lcl.yellow(commands.length)} application (/) ${commands.length > 1 ? "commands" : "command"}.`);
+                if (process.env.SERVER != undefined && process.env.SERVER != "") {
+                    console.log(lcl.blue("[Discord - Info (Dev)]"), "Using server ID: " + process.env.SERVER);
+                    var data = await rest.put(
+                        Routes.applicationGuildCommands(clientId, process.env.SERVER), {
+                        body: commands
+                    },
+                    );
+                } else {
+                    var data = await rest.put(
+                        Routes.applicationCommands(clientId), {
+                        body: commands
+                    },
+                    );
+                }
+                console.log(lcl.green("[Discord - Success]"), `Successfully reloaded ${lcl.yellow(data.length)} application (/) ${commands.length > 1 ? "commands" : "command"}.`);
             } catch (err) {
-                console.log(lcl.red("[Discord - Error]"), "Failed to clear commands.");
+                console.log(lcl.red("[Discord - Error]"), "Failed to reload application (/) commands.");
                 console.error(err);
                 process.exit(1);
             }
         }
 
-        // attempt to register commands
-        try {
-            console.log(lcl.blue("[Discord - Info]"), `Started refreshing ${lcl.yellow(commands.length)} application (/) ${commands.length > 1 ? "commands":"command"}.`);
-            if (process.env.SERVER != undefined && process.env.SERVER != "") {
-                console.log(lcl.blue("[Discord - Info (Dev)]"), "Using server ID: " + process.env.SERVER);
-                var data = await rest.put(
-                    Routes.applicationGuildCommands(clientId, process.env.SERVER), {
-                        body: commands
-                    },
-                );
-            } else {
-                var data = await rest.put(
-                    Routes.applicationCommands(clientId), {
-                        body: commands
-                    },
-                );
-            }
-            console.log(lcl.green("[Discord - Success]"), `Successfully reloaded ${lcl.yellow(data.length)} application (/) ${commands.length > 1 ? "commands":"command"}.`);
-        } catch (err) {
-            console.log(lcl.red("[Discord - Error]"), "Failed to reload application (/) commands.");
-            console.error(err);
-            process.exit(1);
-        }
-
-        // finish
+        // finish and set status
+        await client.user.setPresence({
+            activities: [{
+                name: `Breaking Bad`,
+                type: ActivityType.Watching,
+            }],
+            status: 'idle'
+        });
         console.log(lcl.blue("[Discord - Info]"), `Logged in as "${lcl.yellow(client.user.tag)}"!`);
-
-        // clear downloads folder
-        await clearDownload();
     })();
 });
 
