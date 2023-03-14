@@ -24,7 +24,7 @@ const client = new Client({
 // get base for commands
 const commands = [];
 try {
-    const commandFiles = readdirSync(path.join(__dirname, 'commands')).filter(file => file.endsWith('.js'));
+    const commandFiles = readdirSync(path.join(__dirname, 'commands')).filter(file => file.endsWith('.command.js'));
     client.commands = new Collection();
 
     for (const file of commandFiles) {
