@@ -1,5 +1,8 @@
 const lcl = require('cli-color');
 const {
+    youtube: youtubeHandler
+} = require('./handler/handler');
+const {
     SlashCommandBuilder,
     EmbedBuilder
 } = require('discord.js');
@@ -32,8 +35,22 @@ module.exports = {
         // check if URL is supported then extract video info from handler
         if (/^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/[^\s\/?]*(\?.*)?$/i.test(url)) { // YouTube
             console.log(lcl.blue("[Video - Info]"), "YouTube URL provided.");
+            var video = await youtubeHandler(url);
+            if (!video.success) {
+                console.log(lcl.red("[Video - Error]"), "Failed to download video info.");
+                const failedVideoInfoError = new EmbedBuilder()
+                    .setTitle("Failed to download video info")
+                    .setDescription("Failed to download video info. Please try again later.")
+                    .setColor("#ff6961")
+                    .setTimestamp();
+                await interaction.editReply({
+                    embeds: [failedVideoInfoError]
+                });
+                return;
+            }
+
             await interaction.editReply({
-                content: "YouTube is currently not supported."
+                content: `${video.videoInfo.title} - ${video.videoInfo.requested_formats[0].url}`
             });
             return;
         } else if (/^https?:\/\/(?:www\.)?reddit\.com/i.test(url)) { // Reddit
