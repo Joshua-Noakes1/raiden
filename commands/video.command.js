@@ -1,3 +1,4 @@
+require('dotenv').config();
 const lcl = require('cli-color');
 const {
     youtube: youtubeHandler
@@ -49,8 +50,33 @@ module.exports = {
                 return;
             }
 
+            var videoInfoEmbed = new EmbedBuilder()
+                .setTitle(video.videoInfo.video.title)
+                .setURL(video.videoInfo.video.url)
+                .setAuthor({
+                    name: video.videoInfo.creator.name,
+                    iconURL: video.videoInfo.creator.avatar,
+                    url: video.videoInfo.creator.url
+                })
+                .setDescription(video.videoInfo.video.description)
+                .setThumbnail(video.videoInfo.video.thumbnail)
+                .setColor("#ff6961")
+                .setTimestamp();
+
+            var attachments = [];
+            for (var videoMedia of video.videoInfo.media) {
+                if (videoMedia.size < 8388608) {
+                    attachments.push({
+                        name: `${video.videoInfo.video.title}.${videoMedia.ext}`,
+                        attachment: `${videoMedia.path}.${videoMedia.ext}`
+                    });
+                }
+
+            }
+
             await interaction.editReply({
-                content: `${video.videoInfo.title} - ${video.videoInfo.requested_formats[0].url}`
+                embeds: [videoInfoEmbed],
+                files: attachments
             });
             return;
         } else if (/^https?:\/\/(?:www\.)?reddit\.com/i.test(url)) { // Reddit
