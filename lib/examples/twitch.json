@@ -1,0 +1,181 @@
+{
+    "id": "3529145270",
+    "_old_archive_ids": null,
+    "display_id": "RudeHyperMuleHotPokket-eEpV0NPXnxd6yI8f",
+    "title": "Update",
+    "formats": [
+        {
+            "url": "https://production.assets.clips.twitchcdn.net/RPJ7YnhKVdDT158XesiPHw/AT-cm%7CRPJ7YnhKVdDT158XesiPHw-360.mp4?sig=4506a210d3686e7343de45707b424e76e03ce2ef&token=%7B%22authorization%22%3A%7B%22forbidden%22%3Afalse%2C%22reason%22%3A%22%22%7D%2C%22clip_uri%22%3A%22https%3A%2F%2Fproduction.assets.clips.twitchcdn.net%2FRPJ7YnhKVdDT158XesiPHw%2FAT-cm%257CRPJ7YnhKVdDT158XesiPHw.mp4%22%2C%22device_id%22%3Anull%2C%22expires%22%3A1678973960%2C%22user_id%22%3A%22%22%2C%22version%22%3A2%7D",
+            "format_id": "360",
+            "height": 360,
+            "fps": 17,
+            "ext": "mp4",
+            "protocol": "https",
+            "resolution": "360p",
+            "dynamic_range": "SDR",
+            "aspect_ratio": null,
+            "http_headers": {
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.54 Safari/537.36",
+                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+                "Accept-Language": "en-us,en;q=0.5",
+                "Sec-Fetch-Mode": "navigate"
+            },
+            "video_ext": "mp4",
+            "audio_ext": "none",
+            "format": "360 - 360p"
+        },
+        {
+            "url": "https://production.assets.clips.twitchcdn.net/RPJ7YnhKVdDT158XesiPHw/AT-cm%7CRPJ7YnhKVdDT158XesiPHw-480.mp4?sig=4506a210d3686e7343de45707b424e76e03ce2ef&token=%7B%22authorization%22%3A%7B%22forbidden%22%3Afalse%2C%22reason%22%3A%22%22%7D%2C%22clip_uri%22%3A%22https%3A%2F%2Fproduction.assets.clips.twitchcdn.net%2FRPJ7YnhKVdDT158XesiPHw%2FAT-cm%257CRPJ7YnhKVdDT158XesiPHw.mp4%22%2C%22device_id%22%3Anull%2C%22expires%22%3A1678973960%2C%22user_id%22%3A%22%22%2C%22version%22%3A2%7D",
+            "format_id": "480",
+            "height": 480,
+            "fps": 17,
+            "ext": "mp4",
+            "protocol": "https",
+            "resolution": "480p",
+            "dynamic_range": "SDR",
+            "aspect_ratio": null,
+            "http_headers": {
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.54 Safari/537.36",
+                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+                "Accept-Language": "en-us,en;q=0.5",
+                "Sec-Fetch-Mode": "navigate"
+            },
+            "video_ext": "mp4",
+            "audio_ext": "none",
+            "format": "480 - 480p"
+        },
+        {
+            "url": "https://production.assets.clips.twitchcdn.net/RPJ7YnhKVdDT158XesiPHw/AT-cm%7CRPJ7YnhKVdDT158XesiPHw-720.mp4?sig=4506a210d3686e7343de45707b424e76e03ce2ef&token=%7B%22authorization%22%3A%7B%22forbidden%22%3Afalse%2C%22reason%22%3A%22%22%7D%2C%22clip_uri%22%3A%22https%3A%2F%2Fproduction.assets.clips.twitchcdn.net%2FRPJ7YnhKVdDT158XesiPHw%2FAT-cm%257CRPJ7YnhKVdDT158XesiPHw.mp4%22%2C%22device_id%22%3Anull%2C%22expires%22%3A1678973960%2C%22user_id%22%3A%22%22%2C%22version%22%3A2%7D",
+            "format_id": "720",
+            "height": 720,
+            "fps": 31,
+            "ext": "mp4",
+            "protocol": "https",
+            "resolution": "720p",
+            "dynamic_range": "SDR",
+            "aspect_ratio": null,
+            "http_headers": {
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.54 Safari/537.36",
+                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+                "Accept-Language": "en-us,en;q=0.5",
+                "Sec-Fetch-Mode": "navigate"
+            },
+            "video_ext": "mp4",
+            "audio_ext": "none",
+            "format": "720 - 720p"
+        },
+        {
+            "url": "https://production.assets.clips.twitchcdn.net/RPJ7YnhKVdDT158XesiPHw/AT-cm%7CRPJ7YnhKVdDT158XesiPHw.mp4?sig=4506a210d3686e7343de45707b424e76e03ce2ef&token=%7B%22authorization%22%3A%7B%22forbidden%22%3Afalse%2C%22reason%22%3A%22%22%7D%2C%22clip_uri%22%3A%22https%3A%2F%2Fproduction.assets.clips.twitchcdn.net%2FRPJ7YnhKVdDT158XesiPHw%2FAT-cm%257CRPJ7YnhKVdDT158XesiPHw.mp4%22%2C%22device_id%22%3Anull%2C%22expires%22%3A1678973960%2C%22user_id%22%3A%22%22%2C%22version%22%3A2%7D",
+            "format_id": "1080",
+            "height": 1080,
+            "fps": 31,
+            "ext": "mp4",
+            "protocol": "https",
+            "resolution": "1080p",
+            "dynamic_range": "SDR",
+            "aspect_ratio": null,
+            "http_headers": {
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.54 Safari/537.36",
+                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+                "Accept-Language": "en-us,en;q=0.5",
+                "Sec-Fetch-Mode": "navigate"
+            },
+            "video_ext": "mp4",
+            "audio_ext": "none",
+            "format": "1080 - 1080p"
+        }
+    ],
+    "duration": 55,
+    "view_count": 49243,
+    "timestamp": 1678848166,
+    "thumbnails": [
+        {
+            "id": "tiny",
+            "url": "https://clips-media-assets2.twitch.tv/RPJ7YnhKVdDT158XesiPHw/AT-cm%7CRPJ7YnhKVdDT158XesiPHw-preview-86x45.jpg",
+            "height": 45,
+            "width": 86,
+            "resolution": "86x45"
+        },
+        {
+            "id": "small",
+            "url": "https://clips-media-assets2.twitch.tv/RPJ7YnhKVdDT158XesiPHw/AT-cm%7CRPJ7YnhKVdDT158XesiPHw-preview-260x147.jpg",
+            "height": 147,
+            "width": 260,
+            "resolution": "260x147"
+        },
+        {
+            "id": "medium",
+            "url": "https://clips-media-assets2.twitch.tv/RPJ7YnhKVdDT158XesiPHw/AT-cm%7CRPJ7YnhKVdDT158XesiPHw-preview-480x272.jpg",
+            "height": 272,
+            "width": 480,
+            "resolution": "480x272"
+        }
+    ],
+    "creator": "Atrioc",
+    "uploader": "Adenosine_Tri_Phosphate",
+    "uploader_id": "217399619",
+    "webpage_url": "https://clips.twitch.tv/RudeHyperMuleHotPokket-eEpV0NPXnxd6yI8f",
+    "original_url": "https://clips.twitch.tv/RudeHyperMuleHotPokket-eEpV0NPXnxd6yI8f",
+    "webpage_url_basename": "RudeHyperMuleHotPokket-eEpV0NPXnxd6yI8f",
+    "webpage_url_domain": "clips.twitch.tv",
+    "extractor": "twitch:clips",
+    "extractor_key": "TwitchClips",
+    "playlist": null,
+    "playlist_index": null,
+    "thumbnail": "https://clips-media-assets2.twitch.tv/RPJ7YnhKVdDT158XesiPHw/AT-cm%7CRPJ7YnhKVdDT158XesiPHw-preview-480x272.jpg",
+    "fulltitle": "Update",
+    "duration_string": "55",
+    "upload_date": "20230315",
+    "requested_subtitles": null,
+    "_has_drm": null,
+    "requested_downloads": [
+        {
+            "url": "https://production.assets.clips.twitchcdn.net/RPJ7YnhKVdDT158XesiPHw/AT-cm%7CRPJ7YnhKVdDT158XesiPHw.mp4?sig=4506a210d3686e7343de45707b424e76e03ce2ef&token=%7B%22authorization%22%3A%7B%22forbidden%22%3Afalse%2C%22reason%22%3A%22%22%7D%2C%22clip_uri%22%3A%22https%3A%2F%2Fproduction.assets.clips.twitchcdn.net%2FRPJ7YnhKVdDT158XesiPHw%2FAT-cm%257CRPJ7YnhKVdDT158XesiPHw.mp4%22%2C%22device_id%22%3Anull%2C%22expires%22%3A1678973960%2C%22user_id%22%3A%22%22%2C%22version%22%3A2%7D",
+            "format_id": "1080",
+            "height": 1080,
+            "fps": 31,
+            "ext": "mp4",
+            "protocol": "https",
+            "resolution": "1080p",
+            "dynamic_range": "SDR",
+            "http_headers": {
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.54 Safari/537.36",
+                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+                "Accept-Language": "en-us,en;q=0.5",
+                "Sec-Fetch-Mode": "navigate"
+            },
+            "video_ext": "mp4",
+            "audio_ext": "none",
+            "format": "1080 - 1080p",
+            "epoch": 1678901968,
+            "_filename": "Update [3529145270].mp4",
+            "__write_download_archive": false
+        }
+    ],
+    "url": "https://production.assets.clips.twitchcdn.net/RPJ7YnhKVdDT158XesiPHw/AT-cm%7CRPJ7YnhKVdDT158XesiPHw.mp4?sig=4506a210d3686e7343de45707b424e76e03ce2ef&token=%7B%22authorization%22%3A%7B%22forbidden%22%3Afalse%2C%22reason%22%3A%22%22%7D%2C%22clip_uri%22%3A%22https%3A%2F%2Fproduction.assets.clips.twitchcdn.net%2FRPJ7YnhKVdDT158XesiPHw%2FAT-cm%257CRPJ7YnhKVdDT158XesiPHw.mp4%22%2C%22device_id%22%3Anull%2C%22expires%22%3A1678973960%2C%22user_id%22%3A%22%22%2C%22version%22%3A2%7D",
+    "format_id": "1080",
+    "height": 1080,
+    "fps": 31,
+    "ext": "mp4",
+    "protocol": "https",
+    "resolution": "1080p",
+    "dynamic_range": "SDR",
+    "aspect_ratio": null,
+    "http_headers": {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.54 Safari/537.36",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "Accept-Language": "en-us,en;q=0.5",
+        "Sec-Fetch-Mode": "navigate"
+    },
+    "video_ext": "mp4",
+    "audio_ext": "none",
+    "format": "1080 - 1080p",
+    "epoch": 1678901968,
+    "_type": "video",
+    "_version": {
+        "version": "2023.03.04",
+        "current_git_head": null,
+        "release_git_head": "392389b7df7b818f794b231f14dc396d4875fbad",
+        "repository": "yt-dlp/yt-dlp"
+    }
+}
