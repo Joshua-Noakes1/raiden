@@ -1,5 +1,6 @@
 require('dotenv').config();
 const lcl = require('cli-color');
+const clearFolder = require('../lib/clearFolder');
 const {
     youtube: youtubeHandler
 } = require('./handler/handler');
@@ -18,6 +19,7 @@ module.exports = {
             ephemeral: true
         });
         const url = interaction.options.getString('url').toString();
+        await clearFolder(); // clear folder before downloading
 
         // check if URL is valid and not empty
         if (!/^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/.test(url) || url == "" || url == undefined) {
@@ -134,5 +136,7 @@ module.exports = {
         }
 
         // We can send the video data down here hopefully if it comes back as a success
+
+        clearFolder(); // clear folder after downloading
     }
 }
