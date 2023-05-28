@@ -209,3 +209,6 @@ $RECYCLE.BIN/
 **.dev**
 alreadyClear.txt
 yt-dlp.exe
+
+config/*
+!config/.gitkeep
